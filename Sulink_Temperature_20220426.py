@@ -22,16 +22,6 @@ now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 now_output_time1 = str(datetime.now().strftime('%Y-%m-%d'))
 
 
-'''
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    mainWindows = QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(mainWindows)
-    mainWindows.show()
-    sys.exit(app.exec_())
-'''
-
 
 def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
