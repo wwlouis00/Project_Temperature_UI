@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1528</width>
+    <width>1533</width>
     <height>820</height>
    </rect>
   </property>
@@ -1226,10 +1226,10 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>21</x>
+         <x>20</x>
          <y>42</y>
          <width>731</width>
-         <height>373</height>
+         <height>403</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
@@ -1353,7 +1353,7 @@
         <item row="0" column="6">
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Pass/Fail</string>
+           <string>上加熱片P/F</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1363,7 +1363,7 @@
         <item row="0" column="4">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Pass/Fail</string>
+           <string>P/F</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1771,7 +1771,7 @@
          </widget>
         </item>
         <item row="1" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_2">
+         <widget class="QLineEdit" name="com_ch1_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1782,7 +1782,7 @@
          </widget>
         </item>
         <item row="2" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_3">
+         <widget class="QLineEdit" name="com_ch2_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1793,7 +1793,7 @@
          </widget>
         </item>
         <item row="3" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_4">
+         <widget class="QLineEdit" name="com_ch3_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1804,7 +1804,7 @@
          </widget>
         </item>
         <item row="4" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_5">
+         <widget class="QLineEdit" name="com_ch4_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1815,7 +1815,7 @@
          </widget>
         </item>
         <item row="5" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_6">
+         <widget class="QLineEdit" name="com_ch5_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1826,7 +1826,7 @@
          </widget>
         </item>
         <item row="6" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_7">
+         <widget class="QLineEdit" name="com_ch6_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1837,7 +1837,7 @@
          </widget>
         </item>
         <item row="7" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_8">
+         <widget class="QLineEdit" name="com_ch7_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1848,7 +1848,7 @@
          </widget>
         </item>
         <item row="8" column="5">
-         <widget class="QLineEdit" name="com_ch1_pf_9">
+         <widget class="QLineEdit" name="com_ch8_top">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1859,7 +1859,7 @@
          </widget>
         </item>
         <item row="1" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_10">
+         <widget class="QLineEdit" name="com_ch1_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1870,7 +1870,7 @@
          </widget>
         </item>
         <item row="2" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_11">
+         <widget class="QLineEdit" name="com_ch2_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1881,7 +1881,7 @@
          </widget>
         </item>
         <item row="3" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_12">
+         <widget class="QLineEdit" name="com_ch3_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1892,7 +1892,7 @@
          </widget>
         </item>
         <item row="4" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_13">
+         <widget class="QLineEdit" name="com_ch4_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1903,7 +1903,7 @@
          </widget>
         </item>
         <item row="5" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_14">
+         <widget class="QLineEdit" name="com_ch5_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1914,7 +1914,7 @@
          </widget>
         </item>
         <item row="6" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_15">
+         <widget class="QLineEdit" name="com_ch6_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -1925,7 +1925,7 @@
          </widget>
         </item>
         <item row="7" column="6">
-         <widget class="QLineEdit" name="com_ch1_pf_16">
+         <widget class="QLineEdit" name="com_ch7_top_pf">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
