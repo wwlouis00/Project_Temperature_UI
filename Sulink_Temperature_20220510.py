@@ -294,9 +294,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             if not os.path.isdir('./EGGI_Temperature'):
                 print("Directory 'EGGI_Temperature' does not exist.")
                 os.mkdir('./EGGI_Temperature')
-            if not os.path.isdir('./EGGI_COM'):
-                print("Directory 'EGGI_COM' does not exist.")
-                os.mkdir('./EGGI_COM')
             self.input_file.setText(self.fname[0])
             self.df = pd.read_csv(self.fname[0], delimiter='\t')
             self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
@@ -310,19 +307,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
             # Y軸
             for i in range(0, len(self.df.index), 1):
                 self.CH1_data.append(self.df.loc[i, 'CH1'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH2_data.append(self.df.loc[i, 'CH2'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH3_data.append(self.df.loc[i, 'CH3'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH4_data.append(self.df.loc[i, 'CH4'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH5_data.append(self.df.loc[i, 'CH5'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH6_data.append(self.df.loc[i, 'CH6'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH7_data.append(self.df.loc[i, 'CH7'])
-            for i in range(0, len(self.df.index), 1):
                 self.CH8_data.append(self.df.loc[i, 'CH8'])
             
             for ch in range(1, 9, 1):
@@ -752,6 +742,90 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_chart.setScene(None)
         self.ch7_chart.setScene(None)
         self.ch8_chart.setScene(None)
+    def com_browsefile(self):
+        self.com_CH1_data = []
+        self.com_CH2_data = []
+        self.com_CH3_data = []
+        self.com_CH4_data = []
+        self.com_CH5_data = []
+        self.com_CH6_data = []
+        self.com_CH7_data = []
+        self.com_CH8_data = []
+        self.com_well_pf = []
+        self.com_pf = []
+        self.com_fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
+        if(self.com_fname[0]==""):
+            print("No File")
+        else:
+            if not os.path.isdir('./EGGI_COM'):
+                print("Directory 'EGGI_COM' does not exist.")
+                os.mkdir('./EGGI_COM')
+            self.com_input_file.setText(self.com_fname[0])
+            self.df_com = pd.read_csv(self.com_fname[0], delimiter='\t')
+            # print(self.df_com)
+            self.df_com.columns = ['time','index', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'] 
+            print(self.df_com)
+            for i in range(0,len(self.df_com.index),1):
+                self.com_CH1_data.append(self.df_com.loc[i, 'CH1'])
+                self.com_CH2_data.append(self.df_com.loc[i, 'CH2'])
+                self.com_CH3_data.append(self.df_com.loc[i, 'CH3'])
+                self.com_CH4_data.append(self.df_com.loc[i, 'CH4'])
+                self.com_CH5_data.append(self.df_com.loc[i, 'CH5'])
+                self.com_CH6_data.append(self.df_com.loc[i, 'CH6'])
+                self.com_CH7_data.append(self.df_com.loc[i, 'CH7'])
+                self.com_CH8_data.append(self.df_com.loc[i, 'CH8'])
+            for i in range(1,9,1):
+                a = str("CH")+str(i)
+                self.com_well_pf.append(self.df_com.loc[180, a])
+            print(self.com_well_pf)
+            ########################################
+            for i in range(0,8,1):
+                if (63>self.com_well_pf[i]>58):
+                    self.com_pf.append("Pass")
+                else:
+                    self.com_pf.append("Fail")
+            print("-"*50)
+            print("Well槽")
+            for i in range(0,8,1):
+                print("CH"+str(i+1)+": "+str(self.com_pf[i]))
+            print("-"*50)
+            self.com_ch1_pf.setText(self.com_pf[0])
+            self.com_ch2_pf.setText(self.com_pf[1])
+            self.com_ch3_pf.setText(self.com_pf[2])
+            self.com_ch4_pf.setText(self.com_pf[3])
+            self.com_ch5_pf.setText(self.com_pf[4])
+            self.com_ch6_pf.setText(self.com_pf[5])
+            self.com_ch7_pf.setText(self.com_pf[6])
+            self.com_ch8_pf.setText(self.com_pf[7])
+
+
+            
+
+            
+ 
+
+
+
+                
+                
+            
+            # print(self.com_CH1_data)
+            # print(self.com_CH2_data)
+            # print(self.com_CH3_data)
+            # print(self.com_CH4_data)
+            # print(self.com_CH5_data)
+            # print(self.com_CH6_data)
+            # print(self.com_CH7_data)
+            # print(self.com_CH8_data)
+            self.com_ch1_well.setText(str(self.com_CH1_data[180]))
+            self.com_ch2_well.setText(str(self.com_CH2_data[180]))
+            self.com_ch3_well.setText(str(self.com_CH3_data[180]))
+            self.com_ch4_well.setText(str(self.com_CH4_data[180]))
+            self.com_ch5_well.setText(str(self.com_CH5_data[180]))
+            self.com_ch6_well.setText(str(self.com_CH6_data[180]))
+            self.com_ch7_well.setText(str(self.com_CH7_data[180]))
+            self.com_ch8_well.setText(str(self.com_CH8_data[180]))
+            # for i in range(0,)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -1990,6 +2064,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.btn_clean.clicked.connect(self.clean_log)
+        self.com_btn_opentxt.clicked.connect(self.com_browsefile)
         self.btn_opentxt.clicked.connect(self.browsefile)
         self.btn_save.clicked.connect(self.save_log)
         self.ch1_qrcode.clicked.connect(self.qrcode1)
@@ -2009,6 +2084,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_display.clicked.connect(self.display7)
         self.ch8_display.clicked.connect(self.display8)
         self.input_name.text() #輸入操作人員
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -2096,6 +2172,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch4_display_2.setText(_translate("MainWindow", "顯示CH4"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_hardware), _translate("MainWindow", "EGGI主機"))
         self.EGGI_Title.setText(_translate("MainWindow", "溫度數據監控"))
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
