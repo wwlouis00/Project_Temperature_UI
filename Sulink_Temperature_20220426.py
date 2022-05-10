@@ -744,8 +744,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
         # 顯示現在時間
 
-
-
     #設定相關按鈕觸發事件
     def browsefile1(self):
         self.temp_data = []
