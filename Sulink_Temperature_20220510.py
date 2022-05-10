@@ -789,34 +789,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             for i in range(0,8,1):
                 print("CH"+str(i+1)+": "+str(self.com_pf[i]))
             print("-"*50)
-            self.com_ch1_pf.setText(self.com_pf[0])
-            self.com_ch2_pf.setText(self.com_pf[1])
-            self.com_ch3_pf.setText(self.com_pf[2])
-            self.com_ch4_pf.setText(self.com_pf[3])
-            self.com_ch5_pf.setText(self.com_pf[4])
-            self.com_ch6_pf.setText(self.com_pf[5])
-            self.com_ch7_pf.setText(self.com_pf[6])
-            self.com_ch8_pf.setText(self.com_pf[7])
-
-
-            
-
-            
- 
-
-
-
-                
-                
-            
-            # print(self.com_CH1_data)
-            # print(self.com_CH2_data)
-            # print(self.com_CH3_data)
-            # print(self.com_CH4_data)
-            # print(self.com_CH5_data)
-            # print(self.com_CH6_data)
-            # print(self.com_CH7_data)
-            # print(self.com_CH8_data)
             self.com_ch1_well.setText(str(self.com_CH1_data[180]))
             self.com_ch2_well.setText(str(self.com_CH2_data[180]))
             self.com_ch3_well.setText(str(self.com_CH3_data[180]))
@@ -825,7 +797,64 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.com_ch6_well.setText(str(self.com_CH6_data[180]))
             self.com_ch7_well.setText(str(self.com_CH7_data[180]))
             self.com_ch8_well.setText(str(self.com_CH8_data[180]))
-            # for i in range(0,)
+            self.com_ch1_pf.setText(self.com_pf[0])
+            self.com_ch2_pf.setText(self.com_pf[1])
+            self.com_ch3_pf.setText(self.com_pf[2])
+            self.com_ch4_pf.setText(self.com_pf[3])
+            self.com_ch5_pf.setText(self.com_pf[4])
+            self.com_ch6_pf.setText(self.com_pf[5])
+            self.com_ch7_pf.setText(self.com_pf[6])
+            self.com_ch8_pf.setText(self.com_pf[7])
+    
+    def take_com_picture(self):
+        # ---------------CH1---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH1.jpg')
+        # ---------------CH2---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH2_data, 'o-', color='orange', label="CH2_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH2.jpg')
+        # ---------------CH3---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH3_data, 'o-', color='yellow', label="CH3_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH3.jpg')
+        # ---------------CH4---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH4_data, 'o-', color='green', label="CH4_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH4.jpg')
+        # ---------------CH5---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH5_data, 'o-', color='#6F00FF', label="CH5_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH5.jpg')
+        # ---------------CH6---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH6_data, 'o-', color='m', label="CH6_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH6.jpg')
+        # ---------------CH7---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH7_data, 'o-', color='purple', label="CH7_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH7.jpg')
+        # ---------------CH8---------------------
+        plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
+        plt.plot(self.CH_total, self.CH8_data, 'o-', color='k', label="CH8_data")  # 紅
+        plt.xlim(0, len(self.df.index))  # 設定圖範圍
+        plt.ylim(0, 130)  # 設定圖範圍
+        plt.savefig('image/CH8.jpg')
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
