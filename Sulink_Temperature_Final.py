@@ -855,6 +855,29 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
         plt.savefig('image/CH8.jpg')
+    def com_csv(self):
+        self.com_CH1_data = []
+        self.com_CH2_data = []
+        self.com_CH3_data = []
+        self.com_CH4_data = []
+        self.com_CH5_data = []
+        self.com_CH6_data = []
+        self.com_CH7_data = []
+        self.com_CH8_data = []
+        self.com_file_csv = pd.read_csv("./data/factory.csv", delimiter='\t')
+        print(self.com_file_csv)
+        for i in range(0,len(self.com_file_csv.index),1):
+            self.com_CH1_data.append(self.com_file_csv.loc[i, 'A1'])
+            self.com_CH2_data.append(self.com_file_csv.loc[i, 'A2'])
+            self.com_CH3_data.append(self.com_file_csv.loc[i, 'A3'])
+            self.com_CH4_data.append(self.com_file_csv.loc[i, 'A4'])
+            self.com_CH5_data.append(self.com_file_csv.loc[i, 'A5'])
+            self.com_CH6_data.append(self.com_file_csv.loc[i, 'A6'])
+            self.com_CH7_data.append(self.com_file_csv.loc[i, 'A7'])
+            self.com_CH8_data.append(self.com_file_csv.loc[i, 'A8'])
+        print(self.com_CH1_data)
+
+        
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1138, 697)
@@ -1699,7 +1722,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.btn_clean.clicked.connect(self.clean_log)
-        # self.com_btn_opentxt.clicked.connect(self.com_browsefile)
         self.btn_opentxt.clicked.connect(self.browsefile)
         self.btn_save.clicked.connect(self.save_log)
         self.ch1_qrcode.clicked.connect(self.qrcode1)
@@ -1719,11 +1741,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_display.clicked.connect(self.display7)
         self.ch8_display.clicked.connect(self.display8)
         self.input_name.text() #輸入操作人員
-        # self.btn_opentxt_com.clicked.connect(self.com_csv)
+        self.btn_opentxt_com.clicked.connect(self.com_csv)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "溫度數據監控"))
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_save.setText(_translate("MainWindow", "儲存"))
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
