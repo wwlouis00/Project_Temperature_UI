@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1245</width>
-    <height>669</height>
+    <width>1138</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_Sulink">
      <attribute name="title">
@@ -41,7 +41,7 @@
         <x>0</x>
         <y>6</y>
         <width>531</width>
-        <height>151</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="font">
@@ -66,31 +66,38 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>11</x>
-         <y>44</y>
-         <width>421</width>
-         <height>85</height>
+         <x>10</x>
+         <y>30</y>
+         <width>511</width>
+         <height>109</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_name">
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="input_file">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-            <underline>false</underline>
-            <strikeout>false</strikeout>
             <kerning>false</kerning>
            </font>
           </property>
-          <property name="text">
-           <string>ID</string>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="btn_save">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+          <property name="text">
+           <string>儲存</string>
           </property>
          </widget>
         </item>
@@ -125,36 +132,35 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="input_file">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <kerning>false</kerning>
-           </font>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>440</x>
-         <y>18</y>
-         <width>95</width>
-         <height>142</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
-         <widget class="QPushButton" name="btn_opentxt">
+         <widget class="QLabel" name="label_name">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
             <weight>50</weight>
             <italic>false</italic>
             <bold>false</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>ID</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="btn_opentxt">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
             <underline>false</underline>
             <strikeout>false</strikeout>
             <kerning>false</kerning>
@@ -165,32 +171,14 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btn_save">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-            <underline>false</underline>
-            <strikeout>false</strikeout>
-            <kerning>true</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>儲存</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
+        <item row="2" column="2">
          <widget class="QPushButton" name="btn_clean">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
-            <weight>50</weight>
+            <weight>75</weight>
             <italic>false</italic>
-            <bold>false</bold>
+            <bold>true</bold>
             <underline>false</underline>
             <strikeout>false</strikeout>
             <kerning>true</kerning>
@@ -210,7 +198,7 @@
         <x>0</x>
         <y>162</y>
         <width>531</width>
-        <height>373</height>
+        <height>397</height>
        </rect>
       </property>
       <property name="font">
@@ -262,66 +250,12 @@
          <x>10</x>
          <y>30</y>
          <width>511</width>
-         <height>319</height>
+         <height>349</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="1">
-         <widget class="QGraphicsView" name="ch2_chart"/>
-        </item>
         <item row="2" column="1">
          <widget class="QGraphicsView" name="ch6_chart"/>
-        </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="ch4_display">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH4</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QGraphicsView" name="ch7_chart"/>
-        </item>
-        <item row="0" column="3">
-         <widget class="QGraphicsView" name="ch4_chart"/>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="ch7_display">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH7</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QGraphicsView" name="ch3_chart"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="ch5_display">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH5</string>
-          </property>
-         </widget>
         </item>
         <item row="3" column="1">
          <widget class="QPushButton" name="ch6_display">
@@ -337,28 +271,17 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="3">
-         <widget class="QGraphicsView" name="ch8_chart"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QGraphicsView" name="ch1_chart"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="ch2_display">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH2</string>
-          </property>
-         </widget>
+        <item row="0" column="3">
+         <widget class="QGraphicsView" name="ch4_chart"/>
         </item>
         <item row="2" column="0">
          <widget class="QGraphicsView" name="ch5_chart"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QGraphicsView" name="ch2_chart"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QGraphicsView" name="ch3_chart"/>
         </item>
         <item row="3" column="3">
          <widget class="QPushButton" name="ch8_display">
@@ -374,8 +297,14 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="ch1_display">
+        <item row="2" column="2">
+         <widget class="QGraphicsView" name="ch7_chart"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGraphicsView" name="ch1_chart"/>
+        </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="ch7_display">
           <property name="font">
            <font>
             <pointsize>12</pointsize>
@@ -384,7 +313,38 @@
            </font>
           </property>
           <property name="text">
-           <string>顯示CH1</string>
+           <string>顯示CH7</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QGraphicsView" name="ch8_chart"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="ch5_display">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>顯示CH5</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QPushButton" name="ch4_display">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>顯示CH4</string>
           </property>
          </widget>
         </item>
@@ -402,6 +362,34 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="ch2_display">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>顯示CH2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="ch1_display">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>顯示CH1</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -410,8 +398,8 @@
        <rect>
         <x>540</x>
         <y>6</y>
-        <width>571</width>
-        <height>529</height>
+        <width>581</width>
+        <height>553</height>
        </rect>
       </property>
       <property name="font">
@@ -429,7 +417,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>733</width>
+         <width>561</width>
          <height>389</height>
         </rect>
        </property>
@@ -1081,10 +1069,10 @@
      <widget class="QGroupBox" name="Chart_box_com">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>162</y>
+        <x>1</x>
+        <y>211</y>
         <width>531</width>
-        <height>373</height>
+        <height>349</height>
        </rect>
       </property>
       <property name="font">
@@ -1095,189 +1083,13 @@
        </font>
       </property>
       <property name="title">
-       <string>Chart</string>
+       <string>Well</string>
       </property>
-      <widget class="QSplitter" name="splitter_3">
-       <property name="geometry">
-        <rect>
-         <x>16</x>
-         <y>156</y>
-         <width>0</width>
-         <height>0</height>
-        </rect>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <widget class="QWidget" name="widget_9" native="true">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="widget_10" native="true">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="widget_11" native="true">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="widget_12" native="true">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="layoutWidget_4">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>511</width>
-         <height>319</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="1">
-         <widget class="QGraphicsView" name="ch2_chart_com"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QGraphicsView" name="ch6_chart_com"/>
-        </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="ch4_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH4</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QGraphicsView" name="ch7_chart_com"/>
-        </item>
-        <item row="0" column="3">
-         <widget class="QGraphicsView" name="ch4_chart_com"/>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="ch7_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH7</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QGraphicsView" name="ch3_chart_com"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="ch5_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH5</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QPushButton" name="ch6_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH6</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QGraphicsView" name="ch8_chart_com"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QGraphicsView" name="ch1_chart_com"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="ch2_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QGraphicsView" name="ch5_chart_com"/>
-        </item>
-        <item row="3" column="3">
-         <widget class="QPushButton" name="ch8_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH8</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="ch1_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="ch3_display_com">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>顯示CH3</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0" rowspan="2" colspan="2">
+        <widget class="QGraphicsView" name="well_com_chart"/>
+       </item>
+      </layout>
      </widget>
      <widget class="QGroupBox" name="Input_box_com">
       <property name="geometry">
@@ -1285,7 +1097,7 @@
         <x>0</x>
         <y>6</y>
         <width>531</width>
-        <height>157</height>
+        <height>199</height>
        </rect>
       </property>
       <property name="font">
@@ -1313,10 +1125,103 @@
          <x>10</x>
          <y>30</y>
          <width>511</width>
-         <height>142</height>
+         <height>151</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="2">
+         <widget class="QPushButton" name="btn_opentxt_com">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>打開</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="ID_name_com">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>ID</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="btn_save_com">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>儲存</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QPushButton" name="btn_clean_com">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>清除</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="btn_save_com_2">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>掃描</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="IP_name_com">
           <property name="font">
@@ -1338,7 +1243,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item row="2" column="1">
          <widget class="QLineEdit" name="com_ID">
           <property name="font">
            <font>
@@ -1348,88 +1253,13 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="QPushButton" name="btn_opentxt_com">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>false</underline>
-            <strikeout>false</strikeout>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>打開</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="ID_name_com">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-            <underline>false</underline>
-            <strikeout>false</strikeout>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>ID</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
+        <item row="0" column="1">
          <widget class="QLineEdit" name="com_IP">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
             <kerning>false</kerning>
            </font>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="btn_save_com">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>false</underline>
-            <strikeout>false</strikeout>
-            <kerning>true</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>儲存</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="btn_clean_com">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>false</underline>
-            <strikeout>false</strikeout>
-            <kerning>true</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>清除</string>
           </property>
          </widget>
         </item>
@@ -1442,7 +1272,7 @@
         <x>540</x>
         <y>6</y>
         <width>571</width>
-        <height>529</height>
+        <height>199</height>
        </rect>
       </property>
       <property name="font">
@@ -1458,632 +1288,21 @@
       <widget class="QWidget" name="layoutWidget_7">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>20</x>
          <y>30</y>
-         <width>733</width>
-         <height>389</height>
+         <width>541</width>
+         <height>73</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_7">
-        <item row="0" column="6">
-         <widget class="QLabel" name="top_pf_com">
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>上蓋 P/F</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="2">
-         <widget class="QLineEdit" name="ch8_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="ch1_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QPushButton" name="ch6_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH6</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="6">
-         <widget class="QLineEdit" name="ch6_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="3">
-         <widget class="QLineEdit" name="ch5_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QLineEdit" name="ch2_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="4">
-         <widget class="QLineEdit" name="ch4_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="4">
-         <widget class="QLineEdit" name="ch3_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="5">
-         <widget class="QLineEdit" name="ch7_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QLabel" name="top_com">
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>上蓋</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="5">
-         <widget class="QLineEdit" name="ch4_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="2">
-         <widget class="QLineEdit" name="ch7_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QLineEdit" name="ch1_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="6">
-         <widget class="QLineEdit" name="ch3_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="4">
-         <widget class="QLineEdit" name="ch7_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QPushButton" name="ch7_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH7</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="6">
-         <widget class="QLineEdit" name="ch7_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_ch2_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH2</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="4">
-         <widget class="QLineEdit" name="ch8_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QPushButton" name="ch4_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH4</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="5">
-         <widget class="QLineEdit" name="ch8_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="4">
-         <widget class="QLineEdit" name="ch2_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3">
-         <widget class="QLineEdit" name="ch3_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="6">
-         <widget class="QLineEdit" name="ch5_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QPushButton" name="ch8_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH8</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="4">
-         <widget class="QLineEdit" name="ch1_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="4">
-         <widget class="QLineEdit" name="ch6_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLineEdit" name="ch4_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="3">
-         <widget class="QLineEdit" name="ch6_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="3">
-         <widget class="QLineEdit" name="ch7_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="ch2_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5">
-         <widget class="QLineEdit" name="ch2_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLineEdit" name="ch5_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_ch1_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH1</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_ch8_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH8</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="5">
-         <widget class="QLineEdit" name="ch5_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QPushButton" name="ch3_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH3</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_ch6_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH6</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="5">
-         <widget class="QLineEdit" name="ch6_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="6">
-         <widget class="QLineEdit" name="ch8_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <widget class="QLineEdit" name="ch4_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_ch4_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH4</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="6">
-         <widget class="QLineEdit" name="ch1_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="6">
-         <widget class="QLineEdit" name="ch2_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="6">
-         <widget class="QLineEdit" name="ch4_PF_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLineEdit" name="ch3_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="well_pf_com">
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>Well P/F</string>
-          </property>
+         <widget class="QLineEdit" name="top_pf_com_value">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLabel" name="label_qrcode_6">
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>READ</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="5">
-         <widget class="QLineEdit" name="ch3_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="com_qrcode_name">
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-            <kerning>false</kerning>
-           </font>
-          </property>
-          <property name="text">
-           <string>主機編號</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="5">
-         <widget class="QLineEdit" name="ch1_slope_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_ch7_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH7</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="4">
-         <widget class="QLineEdit" name="ch5_T_Off_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="3">
-         <widget class="QLineEdit" name="ch8_T_On_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_ch5_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH5</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="2">
-         <widget class="QLineEdit" name="ch6_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLineEdit" name="ch2_qrcodelable_com">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_ch3_3">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>CH3</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="ch1_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QPushButton" name="ch5_qrcode_com">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>檢測CH5</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
          <widget class="QLabel" name="well_com">
           <property name="font">
            <font>
@@ -2101,8 +1320,125 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_step">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Step1</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="well_pf_com">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>Well P/F</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="top_pf_com">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>上蓋 P/F</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="well_com_value">
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="well_pf_com_value">
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QLineEdit" name="top_com_value">
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="top_com">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+            <kerning>false</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>上蓋</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
+     </widget>
+     <widget class="QGroupBox" name="Chart_box_com_2">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>210</y>
+        <width>571</width>
+        <height>349</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="title">
+       <string>上蓋</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0" rowspan="2" colspan="2">
+        <widget class="QGraphicsView" name="top_com_chart"/>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -2136,6 +1472,17 @@
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5"/>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
