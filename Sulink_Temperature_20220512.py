@@ -857,16 +857,18 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.savefig('image/CH8.jpg')
 
     def com_csv(self):
-        self.CH1_data = []
-        self.CH2_data = []
-        self.CH3_data = []
-        self.CH4_data = []
-        self.CH5_data = []
-        self.CH6_data = []
-        self.CH7_data = []
-        self.CH8_data = []
+        self.com_CH1_data = []
+        self.com_CH2_data = []
+        self.com_CH3_data = []
+        self.com_CH4_data = []
+        self.com_CH5_data = []
+        self.com_CH6_data = []
+        self.com_CH7_data = []
+        self.com_CH8_data = []
         self.com_file_csv = pd.read_csv("./data/factory.csv", delimiter='\t')
         print(self.com_file_csv)
+
+        for i in 
 
 
 

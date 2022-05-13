@@ -1,23 +1,32 @@
-from fileinput import filename
+# -*- coding: UTF8 -*-
+# 2022-3-8
+# 作者：小藍棗
+# python連線ftp伺服器
 from ftplib import FTP
-ftp = FTP()
-timeout = 30
-port = 22
 
-ftp.connect('192.168.50.51',port,timeout)
-ftp.login('pi','123') #登入
-print (ftp.getwelcome())
-ftp.cwd('/home/pi/socket_cam/result')
-list = ftp.nlst()
+def conn_ftp():
+    '''
+     作用：連線ftp伺服器
+     引數：無
+     返回：ftp伺服器連線的物件
+    '''
+    
+    # FTP連線資訊
+    ftp_ip = "192.168.50.34"
+    # 預設埠21
+    ftp_port = 22
+    # 如果未指定，使用預設使用者名稱為Anonymous，密碼為空
+    ftp_user = "pi"
+    ftp_password = "123"
 
-for test in list:
-    print(test)
-
-path = "C:\GitLab" + test
-
-f = open(path,'wb')
-filename = 'RETR' + test
-ftp.retrbinary(filename,f.write)
-ftp.delete(test)
-ftp.storbinary('STOR '+filename, open(path, 'rb'))
-ftp.quit()
+    ftp = FTP()
+    # 連線ftp
+    ftp.connect(ftp_ip, ftp_port)
+    # ftp登入
+    ftp.login(ftp_user, ftp_password)
+    # 檢視歡迎資訊
+    print(ftp.getwelcome())
+    print("ok")
+    return ftp
+    
+ftp = conn_ftp()

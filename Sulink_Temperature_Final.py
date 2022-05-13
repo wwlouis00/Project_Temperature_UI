@@ -671,7 +671,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
 
-            self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
+            self.save_excel = pd.DataFrame({"Qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
                                                        self.qrcode_result3[0], self.qrcode_result4[0],
                                                        self.qrcode_result5[0], self.qrcode_result6[0],
                                                        self.qrcode_result7[0], self.qrcode_result8[0]],
@@ -855,29 +855,173 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.xlim(0, len(self.df.index))  # 設定圖範圍
         plt.ylim(0, 130)  # 設定圖範圍
         plt.savefig('image/CH8.jpg')
+
     def com_csv(self):
-        self.com_CH1_data = []
-        self.com_CH2_data = []
-        self.com_CH3_data = []
-        self.com_CH4_data = []
-        self.com_CH5_data = []
-        self.com_CH6_data = []
-        self.com_CH7_data = []
-        self.com_CH8_data = []
-        self.com_file_csv = pd.read_csv("./data/factory.csv", delimiter='\t')
+        self.com_A1_data = []
+        self.com_A2_data = []
+        self.com_A3_data = []
+        self.com_A4_data = []
+        self.com_A5_data = []
+        self.com_A6_data = []
+        self.com_A7_data = []
+        self.com_A8_data = []
+        self.com_B1_data = []
+        self.com_B2_data = []
+        self.com_B3_data = []
+        self.com_B4_data = []
+        self.com_B5_data = []
+        self.com_B6_data = []
+        self.com_B7_data = []
+        self.com_B8_data = []
+        self.temp_lid = []
+        self.temp_well = []
+        self.com_total = []
+        self.com_file_csv = pd.read_csv("./data/factory.csv")
+        print("-"*100)
         print(self.com_file_csv)
         for i in range(0,len(self.com_file_csv.index),1):
-            self.com_CH1_data.append(self.com_file_csv.loc[i, 'A1'])
-            self.com_CH2_data.append(self.com_file_csv.loc[i, 'A2'])
-            self.com_CH3_data.append(self.com_file_csv.loc[i, 'A3'])
-            self.com_CH4_data.append(self.com_file_csv.loc[i, 'A4'])
-            self.com_CH5_data.append(self.com_file_csv.loc[i, 'A5'])
-            self.com_CH6_data.append(self.com_file_csv.loc[i, 'A6'])
-            self.com_CH7_data.append(self.com_file_csv.loc[i, 'A7'])
-            self.com_CH8_data.append(self.com_file_csv.loc[i, 'A8'])
-        print(self.com_CH1_data)
+            self.com_A1_data.append(self.com_file_csv.loc[i, 'A1'])
+            self.com_A2_data.append(self.com_file_csv.loc[i, 'A2'])
+            self.com_A3_data.append(self.com_file_csv.loc[i, 'A3'])
+            self.com_A4_data.append(self.com_file_csv.loc[i, 'A4'])
+            self.com_A5_data.append(self.com_file_csv.loc[i, 'A5'])
+            self.com_A6_data.append(self.com_file_csv.loc[i, 'A6'])
+            self.com_A7_data.append(self.com_file_csv.loc[i, 'A7'])
+            self.com_A8_data.append(self.com_file_csv.loc[i, 'A8'])
+            self.com_B1_data.append(self.com_file_csv.loc[i, 'B1'])
+            self.com_B2_data.append(self.com_file_csv.loc[i, 'B2'])
+            self.com_B3_data.append(self.com_file_csv.loc[i, 'B3'])
+            self.com_B4_data.append(self.com_file_csv.loc[i, 'B4'])
+            self.com_B5_data.append(self.com_file_csv.loc[i, 'B5'])
+            self.com_B6_data.append(self.com_file_csv.loc[i, 'B6'])
+            self.com_B7_data.append(self.com_file_csv.loc[i, 'B7'])
+            self.com_B8_data.append(self.com_file_csv.loc[i, 'B8'])
+            self.temp_lid.append(self.com_file_csv.loc[i, 'temp_lid'])
+            self.temp_well.append(self.com_file_csv.loc[i, 'temp_well'])
+        for i in range(0,len(self.com_file_csv.index),1):
+            self.com_total.append(i)
+        print("-"*100)
+        #Well槽平均
+        self.temp_well_average = np.mean(self.temp_well)
+        print(self.temp_well_average)
+        if(62>self.temp_well_average>60):
+            self.well_pf_com_value.setText("Pass")
+        else:
+            self.well_pf_com_value.setText("Fail")
+        self.well_com_value.setText(str(round(self.temp_well_average,2)))
+        #上蓋平均
+        self.temp_lid_average = np.mean(self.temp_lid)
+        if (100>self.temp_lid_average > 90):
+            self.top_pf_com_value.setText("Pass")
+        else:
+            self.top_pf_com_value.setText("Fail")
+        self.top_com_value.setText(str(self.temp_lid_average))
 
-        
+        print(self.temp_lid)
+        print(self.temp_well)
+        self.com_csv_chart()
+
+        # 取圖片
+        img = cv2.imread("EGGI_COM/temp_well.jpg")
+        img2 = cv2.imread("EGGI_COM/temp_lid.jpg")
+
+        # 轉換影象通道
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+
+        # 獲取影象大小
+        x = img.shape[1]
+        y = img.shape[0]
+        x2 = img2.shape[1]
+        y2 = img2.shape[0]
+
+        # 圖片放縮尺度
+        # self.zoomscale = 1
+        frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
+        self.pix = QPixmap.fromImage(frame)
+        frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
+        self.pix2 = QPixmap.fromImage(frame2)
+
+        # 建立畫素圖元
+        self.item = QGraphicsPixmapItem(self.pix)
+        self.item2 = QGraphicsPixmapItem(self.pix2)
+
+        # 建立場景
+        self.scene = QGraphicsScene()
+        self.scene2 = QGraphicsScene()
+        self.scene.addItem(self.item)
+        self.scene2.addItem(self.item2)
+
+        # 將場景新增至檢視
+        self.well_com_chart.setScene(self.scene)
+        self.top_com_chart.setScene(self.scene2)
+
+    
+    def com_csv_chart(self):
+        # ---------------temp_lid---------------------
+        plt.figure(figsize=(5, 3), dpi=100, linewidth=0)
+        plt.plot(self.com_total, self.temp_lid, 'o-', color='k', label="temp_lid")  # 紅
+        plt.xlim(0, len(self.com_file_csv.index))   # 設定x軸圖範圍
+        plt.ylim(70, 105)
+        plt.savefig('EGGI_COM/temp_lid.jpg')
+        # ---------------temp_well---------------------
+        plt.figure(figsize=(5, 3), dpi=100, linewidth=0)
+        plt.plot(self.com_total, self.temp_well, 'o-', color='k', label="temp_well")  # 紅
+        plt.xlim(0, len(self.com_file_csv.index))   # 設定x軸圖範圍 
+        plt.ylim(30, 70)
+        plt.savefig('EGGI_COM/temp_well.jpg')
+    
+    def com_save(self):
+        if self.com_IP.text() == "" or self.com_ID.text() == "":
+            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
+                                    defaultButton=QtWidgets.QMessageBox.Ok)
+        else:
+            QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
+                                          defaultButton=QtWidgets.QMessageBox.Ok)
+            self.save_excel = pd.DataFrame({"Well槽": [self.temp_well_average],
+                                            "Well Pass/Fail": [self.temp_well_average],
+                                            "上蓋": [self.temp_lid_average],
+                                            "上蓋 Pass/Fail" :[self.temp_well_average],
+                                            "檢測結果": [self.temp_well_average],
+                                            "eGGi IP": [self.com_IP.text()],
+                                            "ID": [self.com_ID.text()]
+                                            }, index=['CH1'])
+            self.save_excel.to_excel('./result/history' + now_output_time+"output.xlsx", encoding="utf_8_sig")
+            print("儲存成功")
+
+
+
+    
+    def com_clean(self):
+        self.well_com_value.setText("")
+        self.well_pf_com_value.setText("")
+        self.top_com_value.setText("")
+        self.top_pf_com_value.setText("")
+        self.well_com_chart.setScene(None)
+        self.top_com_chart.setScene(None)
+
+    def com_id_qrcode(self):
+        cap = cv2.VideoCapture(0)
+        while True:
+            ret, frame = cap.read()
+            cv2.imshow('scan qrcode', frame)
+            # 解析二維條碼
+            text = None
+            try:
+                text = scan_qrcode(frame)
+            except Exception as e:
+                pass
+            if text:
+                print(text)
+                self.com_ID.setText(text)
+                # self.qrcode_result1.append(text)
+                break
+            key = cv2.waitKey(10)
+            if key == ord('q'):
+                break
+        self.qrcode_result1.append("None")
+        cv2.destroyAllWindows()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1138, 697)
@@ -1742,6 +1886,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_display.clicked.connect(self.display8)
         self.input_name.text() #輸入操作人員
         self.btn_opentxt_com.clicked.connect(self.com_csv)
+        self.btn_save_com.clicked.connect(self.com_save)
+        self.btn_save_com_2.clicked.connect(self.com_id_qrcode)
+        self.btn_clean_com.clicked.connect(self.com_clean)
+        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
