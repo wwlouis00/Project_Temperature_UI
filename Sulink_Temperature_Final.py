@@ -28,7 +28,6 @@ def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
     return data[0].data.decode('utf-8')
 
-
 class Ui_MainWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
@@ -742,70 +741,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_chart.setScene(None)
         self.ch7_chart.setScene(None)
         self.ch8_chart.setScene(None)
-    def com_browsefile(self):
-        self.com_CH1_data = []
-        self.com_CH2_data = []
-        self.com_CH3_data = []
-        self.com_CH4_data = []
-        self.com_CH5_data = []
-        self.com_CH6_data = []
-        self.com_CH7_data = []
-        self.com_CH8_data = []
-        self.com_well_pf = []
-        self.com_pf = []
-        self.com_fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
-        if(self.com_fname[0]==""):
-            print("No File")
-        else:
-            if not os.path.isdir('./EGGI_COM'):
-                print("Directory 'EGGI_COM' does not exist.")
-                os.mkdir('./EGGI_COM')
-            self.com_input_file.setText(self.com_fname[0])
-            self.df_com = pd.read_csv(self.com_fname[0], delimiter='\t')
-            # print(self.df_com)
-            self.df_com.columns = ['time','index', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'] 
-            print(self.df_com)
-            for i in range(0,len(self.df_com.index),1):
-                self.com_CH1_data.append(self.df_com.loc[i, 'CH1'])
-                self.com_CH2_data.append(self.df_com.loc[i, 'CH2'])
-                self.com_CH3_data.append(self.df_com.loc[i, 'CH3'])
-                self.com_CH4_data.append(self.df_com.loc[i, 'CH4'])
-                self.com_CH5_data.append(self.df_com.loc[i, 'CH5'])
-                self.com_CH6_data.append(self.df_com.loc[i, 'CH6'])
-                self.com_CH7_data.append(self.df_com.loc[i, 'CH7'])
-                self.com_CH8_data.append(self.df_com.loc[i, 'CH8'])
-            for i in range(1,9,1):
-                a = str("CH")+str(i)
-                self.com_well_pf.append(self.df_com.loc[180, a])
-            print(self.com_well_pf)
-            ########################################
-            for i in range(0,8,1):
-                if (63>self.com_well_pf[i]>58):
-                    self.com_pf.append("Pass")
-                else:
-                    self.com_pf.append("Fail")
-            print("-"*50)
-            print("Well槽")
-            for i in range(0,8,1):
-                print("CH"+str(i+1)+": "+str(self.com_pf[i]))
-            print("-"*50)
-            self.com_ch1_well.setText(str(self.com_CH1_data[180]))
-            self.com_ch2_well.setText(str(self.com_CH2_data[180]))
-            self.com_ch3_well.setText(str(self.com_CH3_data[180]))
-            self.com_ch4_well.setText(str(self.com_CH4_data[180]))
-            self.com_ch5_well.setText(str(self.com_CH5_data[180]))
-            self.com_ch6_well.setText(str(self.com_CH6_data[180]))
-            self.com_ch7_well.setText(str(self.com_CH7_data[180]))
-            self.com_ch8_well.setText(str(self.com_CH8_data[180]))
-            self.com_ch1_pf.setText(self.com_pf[0])
-            self.com_ch2_pf.setText(self.com_pf[1])
-            self.com_ch3_pf.setText(self.com_pf[2])
-            self.com_ch4_pf.setText(self.com_pf[3])
-            self.com_ch5_pf.setText(self.com_pf[4])
-            self.com_ch6_pf.setText(self.com_pf[5])
-            self.com_ch7_pf.setText(self.com_pf[6])
-            self.com_ch8_pf.setText(self.com_pf[7])
-    
+   
     def take_com_picture(self):
         # ---------------CH1---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
@@ -876,85 +812,94 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.temp_lid = []
         self.temp_well = []
         self.com_total = []
-        self.com_file_csv = pd.read_csv("./data/factory.csv")
-        print("-"*100)
-        print(self.com_file_csv)
-        for i in range(0,len(self.com_file_csv.index),1):
-            self.com_A1_data.append(self.com_file_csv.loc[i, 'A1'])
-            self.com_A2_data.append(self.com_file_csv.loc[i, 'A2'])
-            self.com_A3_data.append(self.com_file_csv.loc[i, 'A3'])
-            self.com_A4_data.append(self.com_file_csv.loc[i, 'A4'])
-            self.com_A5_data.append(self.com_file_csv.loc[i, 'A5'])
-            self.com_A6_data.append(self.com_file_csv.loc[i, 'A6'])
-            self.com_A7_data.append(self.com_file_csv.loc[i, 'A7'])
-            self.com_A8_data.append(self.com_file_csv.loc[i, 'A8'])
-            self.com_B1_data.append(self.com_file_csv.loc[i, 'B1'])
-            self.com_B2_data.append(self.com_file_csv.loc[i, 'B2'])
-            self.com_B3_data.append(self.com_file_csv.loc[i, 'B3'])
-            self.com_B4_data.append(self.com_file_csv.loc[i, 'B4'])
-            self.com_B5_data.append(self.com_file_csv.loc[i, 'B5'])
-            self.com_B6_data.append(self.com_file_csv.loc[i, 'B6'])
-            self.com_B7_data.append(self.com_file_csv.loc[i, 'B7'])
-            self.com_B8_data.append(self.com_file_csv.loc[i, 'B8'])
-            self.temp_lid.append(self.com_file_csv.loc[i, 'temp_lid'])
-            self.temp_well.append(self.com_file_csv.loc[i, 'temp_well'])
-        for i in range(0,len(self.com_file_csv.index),1):
-            self.com_total.append(i)
-        print("-"*100)
-        #Well槽平均
-        self.temp_well_average = np.mean(self.temp_well)
-        print(self.temp_well_average)
-        if(62>self.temp_well_average>60):
-            self.well_pf_com_value.setText("Pass")
+        self.com_fname = QFileDialog.getOpenFileName(self, '開啟csv檔案', 'C:\Program Files (x86)', 'csv files (*.csv)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
+        if(self.com_fname[0]==""):
+            print("No File")
         else:
-            self.well_pf_com_value.setText("Fail")
-        self.well_com_value.setText(str(round(self.temp_well_average,2)))
-        #上蓋平均
-        self.temp_lid_average = np.mean(self.temp_lid)
-        if (100>self.temp_lid_average > 90):
-            self.top_pf_com_value.setText("Pass")
-        else:
-            self.top_pf_com_value.setText("Fail")
-        self.top_com_value.setText(str(self.temp_lid_average))
+            if not os.path.isdir('./EGGI_COM'):
+                print("Directory 'EGGI_COM' does not exist.")
+                os.mkdir('./EGGI_COM')
+            self.com_IP.setText(self.com_fname[0])
+            self.df_com = pd.read_csv(self.com_fname[0], delimiter='\t')
+            self.com_file_csv = pd.read_csv("./data/factory.csv")
+            print("-"*100)
+            print(self.com_file_csv)
+            for i in range(0,len(self.com_file_csv.index),1):
+                self.com_A1_data.append(self.com_file_csv.loc[i, 'A1'])
+                self.com_A2_data.append(self.com_file_csv.loc[i, 'A2'])
+                self.com_A3_data.append(self.com_file_csv.loc[i, 'A3'])
+                self.com_A4_data.append(self.com_file_csv.loc[i, 'A4'])
+                self.com_A5_data.append(self.com_file_csv.loc[i, 'A5'])
+                self.com_A6_data.append(self.com_file_csv.loc[i, 'A6'])
+                self.com_A7_data.append(self.com_file_csv.loc[i, 'A7'])
+                self.com_A8_data.append(self.com_file_csv.loc[i, 'A8'])
+                self.com_B1_data.append(self.com_file_csv.loc[i, 'B1'])
+                self.com_B2_data.append(self.com_file_csv.loc[i, 'B2'])
+                self.com_B3_data.append(self.com_file_csv.loc[i, 'B3'])
+                self.com_B4_data.append(self.com_file_csv.loc[i, 'B4'])
+                self.com_B5_data.append(self.com_file_csv.loc[i, 'B5'])
+                self.com_B6_data.append(self.com_file_csv.loc[i, 'B6'])
+                self.com_B7_data.append(self.com_file_csv.loc[i, 'B7'])
+                self.com_B8_data.append(self.com_file_csv.loc[i, 'B8'])
+                self.temp_lid.append(self.com_file_csv.loc[i, 'temp_lid'])
+                self.temp_well.append(self.com_file_csv.loc[i, 'temp_well'])
+            for i in range(0,len(self.com_file_csv.index),1):
+                self.com_total.append(i)
+            print("-"*100)
+            #Well槽平均
+            self.temp_well_average = np.mean(self.temp_well)
+            print(self.temp_well_average)
+            if(62>self.temp_well_average>60):
+                self.well_pf_com_value.setText("Pass")
+            else:
+                self.well_pf_com_value.setText("Fail")
+            self.well_com_value.setText(str(round(self.temp_well_average,2)))
+            #上蓋平均
+            self.temp_lid_average = np.mean(self.temp_lid)
+            if (100>self.temp_lid_average > 90):
+                self.top_pf_com_value.setText("Pass")
+            else:
+                self.top_pf_com_value.setText("Fail")
+            self.top_com_value.setText(str(self.temp_lid_average))
 
-        print(self.temp_lid)
-        print(self.temp_well)
-        self.com_csv_chart()
+            print(self.temp_lid)
+            print(self.temp_well)
+            self.com_csv_chart()
 
-        # 取圖片
-        img = cv2.imread("EGGI_COM/temp_well.jpg")
-        img2 = cv2.imread("EGGI_COM/temp_lid.jpg")
+            # 取圖片
+            img = cv2.imread("EGGI_COM/temp_well.jpg")
+            img2 = cv2.imread("EGGI_COM/temp_lid.jpg")
 
-        # 轉換影象通道
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+            # 轉換影象通道
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
-        # 獲取影象大小
-        x = img.shape[1]
-        y = img.shape[0]
-        x2 = img2.shape[1]
-        y2 = img2.shape[0]
+            # 獲取影象大小
+            x = img.shape[1]
+            y = img.shape[0]
+            x2 = img2.shape[1]
+            y2 = img2.shape[0]
 
-        # 圖片放縮尺度
-        # self.zoomscale = 1
-        frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
-        self.pix = QPixmap.fromImage(frame)
-        frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
-        self.pix2 = QPixmap.fromImage(frame2)
+            # 圖片放縮尺度
+            # self.zoomscale = 1
+            frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
+            self.pix = QPixmap.fromImage(frame)
+            frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
+            self.pix2 = QPixmap.fromImage(frame2)
 
-        # 建立畫素圖元
-        self.item = QGraphicsPixmapItem(self.pix)
-        self.item2 = QGraphicsPixmapItem(self.pix2)
+            # 建立畫素圖元
+            self.item = QGraphicsPixmapItem(self.pix)
+            self.item2 = QGraphicsPixmapItem(self.pix2)
 
-        # 建立場景
-        self.scene = QGraphicsScene()
-        self.scene2 = QGraphicsScene()
-        self.scene.addItem(self.item)
-        self.scene2.addItem(self.item2)
+            # 建立場景
+            self.scene = QGraphicsScene()
+            self.scene2 = QGraphicsScene()
+            self.scene.addItem(self.item)
+            self.scene2.addItem(self.item2)
 
-        # 將場景新增至檢視
-        self.well_com_chart.setScene(self.scene)
-        self.top_com_chart.setScene(self.scene2)
+            # 將場景新增至檢視
+            self.well_com_chart.setScene(self.scene)
+            self.top_com_chart.setScene(self.scene2)
 
     
     def com_csv_chart(self):
@@ -985,17 +930,16 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                             "檢測結果": [self.temp_well_average],
                                             "eGGi IP": [self.com_IP.text()],
                                             "ID": [self.com_ID.text()]
-                                            }, index=['CH1'])
+                                            }, index=['Step'])
             self.save_excel.to_excel('./result/history' + now_output_time+"output.xlsx", encoding="utf_8_sig")
             print("儲存成功")
 
-
-
-    
     def com_clean(self):
         self.well_com_value.setText("")
         self.well_pf_com_value.setText("")
         self.top_com_value.setText("")
+        self.com_IP.setText("")
+        self.com_ID.setText("")
         self.top_pf_com_value.setText("")
         self.well_com_chart.setScene(None)
         self.top_com_chart.setScene(None)
@@ -1898,7 +1842,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.btn_save.setText(_translate("MainWindow", "儲存"))
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
         self.label_name.setText(_translate("MainWindow", "ID"))
-        self.btn_opentxt.setText(_translate("MainWindow", "打開"))
+        self.btn_opentxt.setText(_translate("MainWindow", "連接"))
         self.btn_clean.setText(_translate("MainWindow", "清除"))
         self.Chart_box.setTitle(_translate("MainWindow", "Chart"))
         self.ch6_display.setText(_translate("MainWindow", "顯示CH6"))
@@ -1935,7 +1879,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Sulink), _translate("MainWindow", "溫度保護器"))
         self.Chart_box_com.setTitle(_translate("MainWindow", "Well"))
         self.Input_box_com.setTitle(_translate("MainWindow", "Input"))
-        self.btn_opentxt_com.setText(_translate("MainWindow", "打開"))
+        self.btn_opentxt_com.setText(_translate("MainWindow", "連接"))
         self.ID_name_com.setText(_translate("MainWindow", "ID"))
         self.btn_save_com.setText(_translate("MainWindow", "儲存"))
         self.btn_clean_com.setText(_translate("MainWindow", "清除"))
