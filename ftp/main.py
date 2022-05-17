@@ -1,30 +1,45 @@
+
+# -*- coding: UTF-8 -*-
+import cv2
 import ftplib
-host = '192.168.50.240'
-username = 'pi'
-password = '123'
+import os
+import multiprocessing
+import time
+Username = 'pi'
+Password = '123'
+def upload(file):
+	ftp = ftplib.FTP("192.168.50.240")
+	ftp.login(Username,Password)
+	ext = os.path.splitext(file)[1]
+	if ext in (".txt", ".htm", ".html"):
+		ftp.storlines("STOR " + file, open(file))
+	else:
+		ftp.storbinary("STOR " + file, open(file, "rb"), 1024)
+	os.remove(FileName)
+	print (FileName+" uploaded")
 
-f = ftplib.FTP(host)
-f.login(username, password)  
 
 
-def ftp_download():
-    '''以二進位制形式下載檔案'''
-    file_remote = 'log.txt'
-    file_local = 'D:\\test_data\\ftp_download.txt'
-    bufsize = 1024  # 設定緩衝器大小
-    fp = open(file_local, 'wb')
-    f.retrbinary('RETR %s' % file_remote, fp.write, bufsize)
-    fp.close()
 
-def ftp_upload():
-    '''以二進位制形式上傳檔案'''
-    file_remote = 'ftp_upload.txt'
-    file_local = 'D:\\test_data\\ftp_upload.txt'
-    bufsize = 1024
-    fp = open(file_local, 'rb')
-    f.storbinary('STOR ' + file_remote, fp, bufsize)
-    fp.close()
- 
-ftp_download()
-ftp_upload()
-f.quit()
+
+# 選擇第二隻攝影機
+cap = cv2.VideoCapture(0)
+
+while(True):
+  # 從攝影機擷取一張影像
+  ret, frame = cap.read()
+
+  # 顯示圖片
+  cv2.imshow('frame', frame)
+
+  if cv2.waitKey(1) & 0xFF == ord('c'):
+        FileName = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(time.time()))+'.png'
+        cv2.imwrite(FileName,frame)
+        multiprocessing.Process(target=upload,args=(FileName,) ).start()
+	
+
+# 釋放攝影機
+cap.release()
+
+# 關閉所有 OpenCV 視窗
+cv2.destroyAllWindows()
