@@ -915,10 +915,16 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                             "eGGi IP": [self.com_IP.text()],
                                             "ID": [self.com_ID.text()]
                                             }, index=['Step'])
-            self.save_excel.to_excel('./result/history' + com_now_output +"output.xlsx",sheet_name = self.com_ID.text(),encoding="utf_8_sig")
-            with pd.ExcelWriter(engine='openpyxl', path= './result/history' + com_now_output + 'output.xlsx', mode='a') as writer: # mode='a'現有檔案讀寫
-                self.save_excel.to_excel(writer,sheet_name = self.com_ID.text(),encoding="utf_8_sig")
-            print("儲存成功")
+            
+            # self.save_excel.to_excel('./result/history' + com_now_output +"output.xlsx",sheet_name = self.com_ID.text(),encoding="utf_8_sig")
+            if os.path.isfile('./result/history' + com_now_output +"output.xlsx"):
+                with pd.ExcelWriter(engine='openpyxl', path= './result/history' + com_now_output + 'output.xlsx', mode='a') as writer: # mode='a'現有檔案讀寫
+                    self.save_excel.to_excel(writer,sheet_name = self.com_ID.text(),encoding="utf_8_sig")
+            else:
+                self.save_excel.to_excel('./result/history' + com_now_output +"output.xlsx",sheet_name = self.com_ID.text(),encoding="utf_8_sig")
+            # with pd.ExcelWriter(engine='openpyxl', path= './result/history' + com_now_output + 'output.xlsx', mode='a') as writer: # mode='a'現有檔案讀寫
+            #     self.save_excel.to_excel(writer,sheet_name = self.com_ID.text(),encoding="utf_8_sig")
+            # print("儲存成功")
 
     def com_clean(self):
         self.well_com_value.setText("")
