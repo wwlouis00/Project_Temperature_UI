@@ -820,8 +820,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 print("Directory 'EGGI_COM' does not exist.")
                 os.mkdir('./EGGI_COM')
             self.com_IP.setText(self.com_fname[0])
-            self.df_com = pd.read_csv(self.com_fname[0], delimiter='\t')
-            self.com_file_csv = pd.read_csv("./data/factory.csv")
+            self.com_file_csv = pd.read_csv(self.com_fname[0])
+            # self.com_file_csv = pd.read_csv("./data/factory.csv")
             print("-"*100)
             print(self.com_file_csv)
             for i in range(0,len(self.com_file_csv.index),1):
@@ -831,20 +831,26 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.com_total.append(i)
             print("-"*100)
             #Well槽平均
+            self.well_pf_result = []
+            self.temp_pf_result = []
             self.temp_well_average = np.mean(self.temp_well)
             print(self.temp_well_average)
             if(62>self.temp_well_average>60):
                 self.well_pf_com_value.setText("Pass")
+                self.well_pf_result.append("Pass")
             else:
                 self.well_pf_com_value.setText("Fail")
+                self.well_pf_result.append("Fail")
             self.well_com_value.setText(str(round(self.temp_well_average,2)))
             #上蓋平均
             self.temp_lid_average = np.mean(self.temp_lid)
             if (100>self.temp_lid_average > 90):
                 self.top_pf_com_value.setText("Pass")
+                self.temp_pf_result.append("Pass")
             else:
                 self.top_pf_com_value.setText("Fail")
-            self.top_com_value.setText(str(self.temp_lid_average))
+                self.temp_pf_result.append("Fail")
+            self.top_com_value.setText(str(round(self.temp_lid_average,2)))
 
             print(self.temp_lid)
             print(self.temp_well)
@@ -909,9 +915,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                           defaultButton=QtWidgets.QMessageBox.Ok)
             self.save_excel = pd.DataFrame({"ID": [self.com_ID.text()],
                                             "Well槽": [self.temp_well_average],
-                                            "Well Pass/Fail": [self.temp_well_average],
+                                            "Well Pass/Fail": [self.well_pf_result],
                                             "上蓋": [self.temp_lid_average],
-                                            "上蓋 Pass/Fail" :[self.temp_well_average],
+                                            "上蓋 Pass/Fail" :[self.temp_pf_result],
                                             "檢測結果": [self.temp_well_average],
                                             "eGGi IP": [self.com_IP.text()]
                                             }, index=['Step'])
