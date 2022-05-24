@@ -4,7 +4,7 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 import numpy as np
 from scipy.interpolate import make_interp_spline
-from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog,QMessageBox
+from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
@@ -861,40 +861,16 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.temp_lid = []
         self.temp_well = []
         self.com_total = []
-        #輸入ip位置
-        self.fname_ip = self.com_IP.text()
-        if(self.fname_ip == ""):
-            print("沒有檔案")
+        self.com_fname = QFileDialog.getOpenFileName(self, '開啟csv檔案', 'C:\Program Files (x86)', 'csv files (*.csv)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
+        if(self.com_fname[0]==""):
+            print("No File")
         else:
-            #狀況列
-            try:
-                ftp = myFtp(self.fname_ip)
-            except ConnectionRefusedError :
-                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
-                return
-            except TimeoutError:
-                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
-                return
-            try:
-                ftp.Login('pi','123') #eGGi所有機台預設帳號是pi 密碼是123(如果為了測試是可以改)
-            except ftplib.error_perm:
-                QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
-                return
-            try:
-                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
-            except FileNotFoundError:
-                QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
-                return
-            ftp.close()
-            QMessageBox.information(self,'檔案資訊',str('factory.csv')+'下載成功',QMessageBox.Ok)
-            print("ok!")
-            #創建資料夾
             if not os.path.isdir('./EGGI_COM'):
                 print("Directory 'EGGI_COM' does not exist.")
                 os.mkdir('./EGGI_COM')
-            
-            #開始做資料運算
-            self.com_file_csv = pd.read_csv("factory.csv")
+            self.com_IP.setText(self.com_fname[0])
+            self.com_file_csv = pd.read_csv(self.com_fname[0])
+            # self.com_file_csv = pd.read_csv("./data/factory.csv")
             print("-"*100)
             print(self.com_file_csv)
             for i in range(0,len(self.com_file_csv.index),1):
@@ -907,14 +883,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
             self.well_pf_result = []
             self.temp_pf_result = []
             self.temp_well_average = np.mean(self.temp_well)
-            #判斷Pass或Fail
+            print(self.temp_well_average)
             if(62>self.temp_well_average>60):
                 self.well_pf_com_value.setText("Pass")
                 self.well_pf_result.append("Pass")
             else:
                 self.well_pf_com_value.setText("Fail")
                 self.well_pf_result.append("Fail")
-            self.well_com_value.setText(str(round(self.temp_well_average,2))) #取小數後第二位
+            self.well_com_value.setText(str(round(self.temp_well_average,2)))
             #上蓋平均
             self.temp_lid_average = np.mean(self.temp_lid)
             if (100>self.temp_lid_average > 90):
@@ -923,11 +899,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
             else:
                 self.top_pf_com_value.setText("Fail")
                 self.temp_pf_result.append("Fail")
-            self.top_com_value.setText(str(round(self.temp_lid_average,2))) #取小數後第二位
+            self.top_com_value.setText(str(round(self.temp_lid_average,2)))
 
             print(self.temp_lid)
             print(self.temp_well)
             self.com_csv_chart()
+
             # 取圖片
             img = cv2.imread("EGGI_COM/temp_well.jpg")
             img2 = cv2.imread("EGGI_COM/temp_lid.jpg")

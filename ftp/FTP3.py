@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'FTP.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.2
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 #FTP
@@ -28,7 +20,7 @@ class myFtp:
     ftp = ftplib.FTP()
     ftp.set_pasv(False) 
     
-    def __init__(self,host,port=21):
+    def __init__(self,host,port=22):
         self.ftp.connect(host,port)
     
     def Login(self,user,passwd):
