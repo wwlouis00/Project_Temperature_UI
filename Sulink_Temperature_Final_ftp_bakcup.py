@@ -866,14 +866,35 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if(self.fname_ip == ""):
             print("沒有檔案")
         else:
-            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./data")
+            #狀況列
+            try:
+                ftp = myFtp(self.fname_ip)
+            except ConnectionRefusedError :
+                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
+                return
+            except TimeoutError:
+                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
+                return
+            try:
+                ftp.Login('pi','123') #eGGi所有機台預設帳號是pi 密碼是123(如果為了測試是可以改)
+            except ftplib.error_perm:
+                QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
+                return
+            try:
+                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
+            except FileNotFoundError:
+                QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
+                return
+            ftp.close()
+            QMessageBox.information(self,'檔案資訊',str('factory.csv')+'下載成功',QMessageBox.Ok)
+            print("ok!")
             #創建資料夾
             if not os.path.isdir('./EGGI_COM'):
                 print("Directory 'EGGI_COM' does not exist.")
                 os.mkdir('./EGGI_COM')
             
             #開始做資料運算
-            self.com_file_csv = pd.read_csv("./data/factory.csv")
+            self.com_file_csv = pd.read_csv("factory.csv")
             print("-"*100)
             print(self.com_file_csv)
             for i in range(0,len(self.com_file_csv.index),1):
