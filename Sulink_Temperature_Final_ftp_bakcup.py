@@ -32,7 +32,7 @@ class myFtp:
     ftp = ftplib.FTP()
     ftp.set_pasv(False)
 
-    def __init__(self,host,port=21):
+    def __init__(self,host,port=22):
         self.ftp.connect(host,port)
     
     def Login(self,user,passwd):
@@ -881,7 +881,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
                 return
             try:
-                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
+                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
             except FileNotFoundError:
                 QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
                 return
@@ -980,7 +980,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
     
     def com_save(self):
         if self.com_IP.text() == "" or self.com_ID.text() == "":
-            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未輸入IP", buttons=QtWidgets.QMessageBox.Ok,
                                     defaultButton=QtWidgets.QMessageBox.Ok)
         else:
             QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
