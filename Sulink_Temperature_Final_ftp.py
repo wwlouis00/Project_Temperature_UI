@@ -866,7 +866,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if(self.fname_ip == ""):
             print("沒有檔案")
         else:
-            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./data")
+            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./data" )
             #創建資料夾
             if not os.path.isdir('./EGGI_COM'):
                 print("Directory 'EGGI_COM' does not exist.")
