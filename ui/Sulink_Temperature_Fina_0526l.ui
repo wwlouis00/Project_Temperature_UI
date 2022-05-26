@@ -1119,7 +1119,7 @@
          <x>11</x>
          <y>31</y>
          <width>511</width>
-         <height>115</height>
+         <height>109</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_6">
@@ -1204,7 +1204,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="ID_name_com_2">
+         <widget class="QLabel" name="ROI_name_com">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
@@ -1224,8 +1224,20 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="com_ROI">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+            <kerning>false</kerning>
+           </font>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="2">
-         <widget class="QPushButton" name="btn_save_com_2">
+         <widget class="QPushButton" name="btn_roi_com">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
@@ -1238,19 +1250,7 @@
            </font>
           </property>
           <property name="text">
-           <string>loading</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="com_ID_2">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-            <kerning>false</kerning>
-           </font>
+           <string>打開</string>
           </property>
          </widget>
         </item>

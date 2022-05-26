@@ -964,8 +964,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
                                     defaultButton=QtWidgets.QMessageBox.Ok)
         else:
-            if os.path.isfile('./result/history' + com_now_output +"output.xlsx"):
-                new_df = pd.read_excel(r"./result/history" + com_now_output + "output.xlsx", index_col=0)
+            if os.path.isfile('./result/eggi_temp_' + com_now_output +"output.xlsx"):
+                new_df = pd.read_excel(r"./result/eggi_temp_" + com_now_output + "output.xlsx", index_col=0)
                 print("-"*100)
                 # print("test")
                 new_data = pd.DataFrame([[self.com_ID.text(),self.com_IP.text(),str(round(self.temp_well_average,2)),
@@ -973,7 +973,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                          columns=["ID", "eGGi IP", "Well槽","Well Pass/Fail","上蓋","上蓋 Pass/Fail"])
                 self.save_excel = new_df.append(new_data, ignore_index=True)
                 print(new_df)
-                self.save_excel.to_excel(r'./result/history' + com_now_output +"output.xlsx",encoding="utf_8_sig")
+                self.save_excel.to_excel(r'./result/eggi_temp_' + com_now_output +"output.xlsx",encoding="utf_8_sig")
             else:
                 QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                             defaultButton=QtWidgets.QMessageBox.Ok)
@@ -986,7 +986,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                                 "eGGi IP": [self.com_IP.text()]
                                                 })
 
-                self.save_excel.to_excel('./result/history' + com_now_output +"output.xlsx",encoding="utf_8_sig")
+                self.save_excel.to_excel('./result/eggi_temp_' + com_now_output +"output.xlsx",encoding="utf_8_sig")
 
     def com_clean(self):
         self.well_com_value.setText("")
