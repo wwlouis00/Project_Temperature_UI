@@ -965,11 +965,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
             self.save_excel = pd.DataFrame({"ID": [self.com_ID.text()],
-                                            "Well槽": [self.temp_well_average],
+                                            "eGGi IP": [self.com_IP.text()],
+                                            "Well槽": [str(round(self.temp_well_average,2))],
                                             "Well Pass/Fail": [self.well_pf_result],
-                                            "上蓋": [self.temp_lid_average],
+                                            "上蓋": [str(round(self.temp_lid_average,2))],
                                             "上蓋 Pass/Fail" :[self.temp_pf_result],
-                                            "檢測結果": [self.temp_well_average],
                                             "eGGi IP": [self.com_IP.text()]
                                             }, index=['Step'])
             
