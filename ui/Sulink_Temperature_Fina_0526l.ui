@@ -411,7 +411,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>561</width>
+         <width>733</width>
          <height>397</height>
         </rect>
        </property>
@@ -1113,13 +1113,13 @@
       <property name="title">
        <string>Input</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>11</x>
          <y>31</y>
          <width>511</width>
-         <height>109</height>
+         <height>138</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_6">
@@ -1256,13 +1256,13 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>100</x>
          <y>151</y>
          <width>331</width>
-         <height>37</height>
+         <height>44</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_9">
@@ -1329,8 +1329,8 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>551</width>
-         <height>75</height>
+         <width>556</width>
+         <height>80</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_7">
@@ -1458,9 +1458,9 @@
       <property name="geometry">
        <rect>
         <x>540</x>
-        <y>210</y>
+        <y>204</y>
         <width>571</width>
-        <height>379</height>
+        <height>385</height>
        </rect>
       </property>
       <property name="font">
