@@ -2,13 +2,10 @@ import sys
 from PyQt5.QtWidgets import QApplication,QMainWindow
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
+import csv
 import numpy as np
 from scipy.interpolate import make_interp_spline
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
 from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
-=======
-from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog,QMessageBox
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
@@ -21,70 +18,15 @@ import cv2
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene, QGraphicsPixmapItem
 from PyQt5 import QtCore, QtGui, QtWidgets
-import ftplib
-from ctypes import *
+
 #時間格式
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-now_output_time1 = str(datetime.now().strftime('%Y-%m-%d'))
-
-
-=======
 com_now_output = str(datetime.now().strftime('%Y-%m-%d'))
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
 
 #QrCode掃描
 def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
     return data[0].data.decode('utf-8')
-
-class myFtp:
-    ftp = ftplib.FTP()
-    ftp.set_pasv(False)
-
-    def __init__(self,host,port=21):
-        self.ftp.connect(host,port)
-    
-    def Login(self,user,passwd):
-        self.ftp.login(user,passwd)
-        print(self.ftp.welcome)
-    def DownLoadFile(self,LocalFile,RemoteFile): #下載指定目錄下的指定檔案
-        file_handler = open(LocalFile,'wb')
-        print(file_handler)
-        # self.ftp.retrbinary("RETR %s" % (RemoteFile),file_handler.write)#接收伺服器上檔案並寫入本地檔案
-        self.ftp.retrbinary('RETR ' + RemoteFile,file_handler.write)
-        file_handler.close()
-        return True
-
-    def DownLoadFileTree(self,LocalDir,RemoteDir): # 下載整個目錄下的檔案
-        print("remoteDir:",RemoteDir)
-        if not os.path.exists(LocalDir):
-            os.makedirs(LocalDir)
-            self.ftp.cwd(RemoteDir)
-            RemoteNames = self.ftp.nlst()
-            print("RemoteNames",RemoteNames)
-            for file in RemoteNames:
-                Local = os.path.join(LocalDir,file)
-                print(self.ftp.nlst(file))
-            if file.find(".") == -1:
-                if not os.path.exists(Local):
-                    os.makedirs(Local)
-                    self.DownLoadFileTree(Local,file)
-                else:
-                    self.DownLoadFile(Local,file)
-                    self.ftp.cwd("..")
-                    return True
-
-    #從本地上傳檔案到ftp
-    def uploadfile(self,remotepath,localpath):
-        bufsize = 1024
-        fp = open(localpath,'rb')
-        ftp.storbinary('STOR ' + remotepath,fp,bufsize)
-        ftp.set_debuglevel(0)
-        fp.close() 
-
-    def close(self):
-        self.ftp.quit()
 
 
 class Ui_MainWindow(QtWidgets.QWidget):
@@ -104,7 +46,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.qrcode_result6 = []
         self.qrcode_result7 = []
         self.qrcode_result8 = []
-
+    
     def display1(self):
         img = cv2.imread("image/CH1.jpg")
         img = cv2.resize(img, (500, 500))
@@ -343,23 +285,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if(self.fname[0]==""):
             print("no file")
         else:
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-            if not os.path.isdir('./result'):
-                print("Directory 'result' does not exist.")
-            if not os.path.isdir('./image'):
-                print("Directory 'image' does not exist.")
-                os.mkdir('./image')
-            if not os.path.isdir('./image1'):
-                print("Directory 'image1' does not exist.")
-                os.mkdir('./image1')
-            self.input_file.setText(self.fname[0])
-            self.df = pd.read_csv(self.fname[0], delimiter='\t')
-            self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
-            print("Open file(.txt) >> " + str(self.fname[0]))
-            print("*" * 100)
-            print(self.df)
-            print("*" * 100)
-=======
             if not os.path.isdir('./image'):
                 print("Directory 'image' does not exist.")
                 os.mkdir('./image')
@@ -376,7 +301,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             print("-" * 100)
             print(self.df)
             print("-" * 100)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
             # X軸
             for i in range(0, len(self.df.index), 1):
                 self.CH_total.append(i)
@@ -424,15 +348,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
                     for k in range(1, 9, 1):
                         self.T_On_array.append(0)
                         self.T_Off_array.append(0)
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
                 print(self.T_On_array)
                 self.CH_T_On.append(self.T_On_array[0])
                 print(self.CH_T_On)
-=======
-                # print(self.T_On_array)
-                self.CH_T_On.append(self.T_On_array[0])
-                # print(self.CH_T_On)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
                 self.CH_T_Off.append(self.T_Off_array[0])
                 value_gap = self.T_On_array[0] - self.T_Off_array[0]
                 time_gap = self.slot_high[0] - self.slot_low[0]
@@ -442,12 +360,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 print(self.CH_T_On[i])
             print("-"*20 + "CH_T_Off" + "-"*20)
             for i in range(0,8,1):
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-                print(self.CH_T_Off[i]) 
-=======
                 print(self.CH_T_Off[i])
 
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
             # 將On跟Off陣列存取的資料對應至各個位置上
             self.ch1_T_On.setText(str(self.CH_T_On[0]))
             self.ch1_T_Off.setText(str(self.CH_T_Off[0]))
@@ -757,7 +671,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
 
-            self.save_excel = pd.DataFrame({"Qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
+            self.save_excel = pd.DataFrame({"qrcode": [self.qrcode_result1[0], self.qrcode_result2[0],
                                                        self.qrcode_result3[0], self.qrcode_result4[0],
                                                        self.qrcode_result5[0], self.qrcode_result6[0],
                                                        self.qrcode_result7[0], self.qrcode_result8[0]],
@@ -828,284 +742,71 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_chart.setScene(None)
         self.ch7_chart.setScene(None)
         self.ch8_chart.setScene(None)
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-
-
-        # 顯示現在時間
-
-
-
-    #設定相關按鈕觸發事件
-    def browsefile1(self):
-        self.temp_data = []
-        self.well_data=[]
-        self.time_data=[]
-        self.title_total = []
-        self.CH_total=[]
-        self.CH1_data=[]
-        self.CH2_data=[]
-
-        self.time_hour=[]
-        self.time_min=[]
-        self.time_sec=[]
-        self.time_data1=[]
-
-        self.fname=[]
-        self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
-        if(self.fname[0]==""):
-            print("no file")
+    def com_browsefile(self):
+        self.com_CH1_data = []
+        self.com_CH2_data = []
+        self.com_CH3_data = []
+        self.com_CH4_data = []
+        self.com_CH5_data = []
+        self.com_CH6_data = []
+        self.com_CH7_data = []
+        self.com_CH8_data = []
+        self.com_well_pf = []
+        self.com_pf = []
+        self.com_fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
+        if(self.com_fname[0]==""):
+            print("No File")
         else:
-            self.com_input_file.setText(self.fname[0])
-            #self.df = pd.read_csv(self.fname[0], delimiter='\t')
-            self.path = self.fname[0]
-            self.data = np.genfromtxt(self.path,dtype=str, delimiter=',')
-            #self.a=[]
-            self.a=self.data.shape[0]            
-            #print(self.a)
-            #將csv資料轉換list
-            for i in range(1,self.a,1):
-                try:
-                    self.time_data.append(self.data[i][0])
-                except ValueError:
-                    print("error 1")
-                    self.time_data.append(self.data[i-1][0])
-            for i in range(1,self.a,1):
-                try:
-
-                    #if(float(self.data[i][17])>float(self.data[i-1][17])+100):
-                        #self.temp_data.append(float(self.data[i-1][17]))
-                        #print("出現錯誤")                    
-                    #self.temp_data.append(float(self.data[i][17]))
-                    #print(float(self.data[i][17]))
-
-                    print(float(self.data[i][17]))
-                    if(i>1):
-                        try:
-                            if(float(self.data[i][17])+60<float(self.data[i-1][17])):
-                                self.temp_data.append(float(self.data[i-1][17]))
-                                print("error 2 number")
-                            else:
-                                self.temp_data.append(float(self.data[i][17]))
-                        except ValueError:
-                            self.temp_data.append(float(self.data[i-2][17]))
-                            print("error 2-1 number")
-                    else:
-                        self.temp_data.append(float(self.data[i][17]))
-
-                except ValueError:
-                    print("error 2")
-                    self.temp_data.append(float(self.data[i-1][17]))
-            for i in range(1,self.a,1):
-                try:                    
-                    print(float(self.data[i][18]))
-                    if(i>1):
-                        try:
-                            if(float(self.data[i][18])+60<float(self.data[i-1][18])):
-                                self.well_data.append(float(self.data[i-1][18]))
-                                print("error 3 number")
-                            else:
-                                self.well_data.append(float(self.data[i][18]))
-                        except ValueError:
-                            self.well_data.append(float(self.data[i][18]))
-                            print("error 3-1 number")
-                    else:
-                        self.well_data.append(float(self.data[i][18]))
-                    #self.well_data.append(float(self.data[i][18]))
-                except ValueError:
-                    print("error 3")
-                    self.well_data.append(float(self.data[i-1][18]))
-                    
-        
-
-            for i in range(0,self.a-1,1):
-                self.time_hour.append(int(self.time_data[i][0:2]))
-            for i in range(0,self.a-1,1):
-                self.time_min.append(int(self.time_data[i][3:5]))
-            for i in range(0,self.a-1,1):
-                self.time_sec.append(int(self.time_data[i][6:8]))
-            #取出時間資料
-            '''
-            for i in range(0,100,1):
-                print(self.time_hour[i])
-            for i in range(0,100,1):
-                print(self.time_min[i])
-        
-            for i in range(0,100,1):
-                print(self.time_sec[i])
-            '''
-
-            self.min=0
-            self.sec=0
-            self.time_data1.append(str(self.min)+":"+str(self.sec))
-            for i in range(0,self.a-2,1):
-                if (self.time_sec[i+1]>self.time_sec[i]):
-                    self.sec=self.sec+(self.time_sec[i+1]-self.time_sec[i])
-                    #print(self.min)
-                    if (self.sec>=60):
-                        self.sec=self.sec-60
-                        self.min=self.min+1
-                    self.time_data1.append(str(self.min)+":"+str(self.sec))
+            if not os.path.isdir('./EGGI_COM'):
+                print("Directory 'EGGI_COM' does not exist.")
+                os.mkdir('./EGGI_COM')
+            self.com_input_file.setText(self.com_fname[0])
+            self.df_com = pd.read_csv(self.com_fname[0], delimiter='\t')
+            # print(self.df_com)
+            self.df_com.columns = ['time','index', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8'] 
+            print(self.df_com)
+            for i in range(0,len(self.df_com.index),1):
+                self.com_CH1_data.append(self.df_com.loc[i, 'CH1'])
+                self.com_CH2_data.append(self.df_com.loc[i, 'CH2'])
+                self.com_CH3_data.append(self.df_com.loc[i, 'CH3'])
+                self.com_CH4_data.append(self.df_com.loc[i, 'CH4'])
+                self.com_CH5_data.append(self.df_com.loc[i, 'CH5'])
+                self.com_CH6_data.append(self.df_com.loc[i, 'CH6'])
+                self.com_CH7_data.append(self.df_com.loc[i, 'CH7'])
+                self.com_CH8_data.append(self.df_com.loc[i, 'CH8'])
+            for i in range(1,9,1):
+                a = str("CH")+str(i)
+                self.com_well_pf.append(self.df_com.loc[180, a])
+            print(self.com_well_pf)
+            ########################################
+            for i in range(0,8,1):
+                if (63>self.com_well_pf[i]>58):
+                    self.com_pf.append("Pass")
                 else:
-                    self.sec=self.sec+(self.time_sec[i+1]+60-self.time_sec[i])
-                    if (self.sec>=60):
-                        self.sec=self.sec-60
-                        self.min=self.min+1
-                    self.time_data1.append(str(self.min)+":"+str(self.sec))
-            
-                print(self.time_data1[i])
-            '''
-            for i in range(0,99,1):    
-                if(self.time_sec[i]>self.time_sec[i+1]):
-                    self.sec=self.sec+((self.time_sec[i+1]+60)-self.time_sec[i])
-                
-            
-            
-                else:
-                    self.sec=(self.time_sec[i+1]-self.time_sec[i])
-                    self.time_data1.append(self.min+":"+self.sec)
-            '''
-
-
-
-
-            #print(self.time_data[0])
-            #print(type(self.time_data))
-            #print(self.temp_data)
-            #print(self.well_data)
-
-            #plt.ylim([0,8])
-        
-            '''
-            self.xs=np.linspace(self.time_data1.min(),self.time_data1.max(),500)
-            self.ys=make_interp_spline(self.time_data1,self.temp_data)(self.xs)
-            plt.plot(self.xs,self.ys, color = 'r')
-            '''
-            plt.plot(self.time_data1,self.temp_data, color = 'r')
-            plt.savefig('image1/temp_data.jpg')
-            plt.clf()
-            plt.plot(self.time_data1,self.well_data, color = 'r')
-            plt.savefig('image1/well_data.jpg')
-            plt.show()
-
-
-
-
-
-            '''
-            self.path = self.fname[0]
-            with open(self.path, newline='') as csvfile:
-                rows = csv.reader(csvfile, delimiter=',')
-                headers = next(rows)
-                print('headers: %s' % headers)
-                for row in rows:
-                    print(row)
-            '''
-        
-        
-
-        
-            #print(self.df.head([1,1]))
-            #y=(self.df['time'])
-            #print(y)
-            #plt.plot(self.df.time, self.df.temp_lid, 'o') #將a、b所繪製的圖表更改顯示方式
-            #plt.plot(self.df.time, self.temp_well) #利用a、c繪製圖表
-            #plt.legend(["b","c"]) #標示ab、ac的圖示
-            #plt.show() #執行
-        
-            # X軸
-            '''
-            for i in range(0, len(self.df.index), 1):
-                self.title_total.append(i)
-            '''
-        
-
-            #self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
-            # -----------------------------------------------------------------------
-            img = cv2.imread("image1/temp_data.jpg")
-            img2 = cv2.imread("image1/well_data.jpg")   
-            # 轉換影象通道
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-            # 獲取影象大小
-            x = img.shape[1]
-            y = img.shape[0]
-            x2 = img2.shape[1]
-            y2 = img2.shape[0]
-            # 圖片放縮尺度
-            frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
-            self.pix = QPixmap.fromImage(frame)
-            frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
-            self.pix2 = QPixmap.fromImage(frame2)
-            # 建立畫素圖元
-            self.item = QGraphicsPixmapItem(self.pix)
-            self.item2 = QGraphicsPixmapItem(self.pix2)
-            # 建立場景
-            self.scene = QGraphicsScene()
-            self.scene2 = QGraphicsScene()
-            self.scene.addItem(self.item)
-            self.scene2.addItem(self.item2)
-            # 將場景新增至檢視
-            self.lid_chart.setScene(self.scene)
-            self.well_chart.setScene(self.scene2)
-             # -----------------------------------------------------------------------
-
-            #self.take_picture1()
-
-
+                    self.com_pf.append("Fail")
+            print("-"*50)
+            print("Well槽")
+            for i in range(0,8,1):
+                print("CH"+str(i+1)+": "+str(self.com_pf[i]))
+            print("-"*50)
+            self.com_ch1_well.setText(str(self.com_CH1_data[180]))
+            self.com_ch2_well.setText(str(self.com_CH2_data[180]))
+            self.com_ch3_well.setText(str(self.com_CH3_data[180]))
+            self.com_ch4_well.setText(str(self.com_CH4_data[180]))
+            self.com_ch5_well.setText(str(self.com_CH5_data[180]))
+            self.com_ch6_well.setText(str(self.com_CH6_data[180]))
+            self.com_ch7_well.setText(str(self.com_CH7_data[180]))
+            self.com_ch8_well.setText(str(self.com_CH8_data[180]))
+            self.com_ch1_pf.setText(self.com_pf[0])
+            self.com_ch2_pf.setText(self.com_pf[1])
+            self.com_ch3_pf.setText(self.com_pf[2])
+            self.com_ch4_pf.setText(self.com_pf[3])
+            self.com_ch5_pf.setText(self.com_pf[4])
+            self.com_ch6_pf.setText(self.com_pf[5])
+            self.com_ch7_pf.setText(self.com_pf[6])
+            self.com_ch8_pf.setText(self.com_pf[7])
     
-    def save_log1(self):
-        if self.com_input_name.text() == "":
-            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-        elif self.com_input_file.text() == "":
-            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"未開啟檔案", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-        else:
-            QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-            
-            self.save_excel = pd.DataFrame({"日期時間" : [self.com_output_datetime.text(),self.com_output_datetime.text()],
-                                            "eGGi 編號" : ["",""],
-                                            "操作人員" : [self.com_input_name.text(),self.com_input_name.text()],
-                                            "Csv檔案" : [self.com_input_file.text(),self.com_input_file.text()],
-                                            "上蓋溫度" : ["" ,""],
-                                            "Pass/Fail" : ["",""],
-                                            "Well 槽 Step 1溫度" : ["",""],
-                                            "Pass/Fail " : ["",""],#名稱不可相同，必須多一個空格
-                                            "Well 槽 Step 2溫度" : ["",""],
-                                            "Pass/Fail  " : ["",""],
-                                            }, ["" ,""])
-            filepath = './result1/history' + now_output_time1+"output1.xlsx"
-            if os.path.isfile(filepath):
-                print("檔案存在。")
-                self.writer = pd.ExcelWriter(r'./result1/history' + now_output_time1+"output1.xlsx", mode="a", engine="openpyxl")
-                self.save_excel.to_excel(self.writer, index=["" ,""], sheet_name="b")
-                self.writer.save()
-                self.writer.close()
-            else:
-                print("檔案不存在。")
-                self.save_excel.to_excel('./result1/history' + now_output_time1+"output1.xlsx", encoding="openpyxl")
-                #utf_8_sig
-        
-    def clean_log1(self):
-        self.com_input_name.setText("")
-        self.com_output_datetime.setText("")
-        self.com_input_file.setText("")
-
-        self.scene = QGraphicsScene()
-        self.scene2 = QGraphicsScene()
-        self.lid_chart.setScene(self.scene)
-        self.well_chart.setScene(self.scene2)
-
-    
-    
-    
-    '''
-    def take_picture1(self):
-=======
-   
     def take_com_picture(self):
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
         # ---------------CH1---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
@@ -1156,182 +857,24 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.savefig('image/CH8.jpg')
 
     def com_csv(self):
-        self.com_A1_data = []
-        self.com_A2_data = []
-        self.com_A3_data = []
-        self.com_A4_data = []
-        self.com_A5_data = []
-        self.com_A6_data = []
-        self.com_A7_data = []
-        self.com_A8_data = []
-        self.com_B1_data = []
-        self.com_B2_data = []
-        self.com_B3_data = []
-        self.com_B4_data = []
-        self.com_B5_data = []
-        self.com_B6_data = []
-        self.com_B7_data = []
-        self.com_B8_data = []
-        self.temp_lid = []
-        self.temp_well = []
-        self.com_total = []
-        #輸入ip位置
-        self.fname_ip = self.com_IP.text()
-        if(self.fname_ip == ""):
-            print("沒有檔案")
-        else:
-            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./data" )
-            #創建資料夾
-            if not os.path.isdir('./EGGI_COM'):
-                print("Directory 'EGGI_COM' does not exist.")
-                os.mkdir('./EGGI_COM')
-            
-            #開始做資料運算
-            self.com_file_csv = pd.read_csv("./data/factory.csv")
-            print("-"*100)
-            print(self.com_file_csv)
-            for i in range(0,len(self.com_file_csv.index),1):
-                self.temp_lid.append(self.com_file_csv.loc[i, 'temp_lid'])
-                self.temp_well.append(self.com_file_csv.loc[i, 'temp_well'])
-            for i in range(0,len(self.com_file_csv.index),1):
-                self.com_total.append(i)
-            print("-"*100)
-            #Well槽平均
-            self.well_pf_result = []
-            self.temp_pf_result = []
-            self.temp_well_average = np.mean(self.temp_well)
-            #判斷Pass或Fail
-            if(62>self.temp_well_average>60):
-                self.well_pf_com_value.setText("Pass")
-                self.well_pf_result.append("Pass")
-            else:
-                self.well_pf_com_value.setText("Fail")
-                self.well_pf_result.append("Fail")
-            self.well_com_value.setText(str(round(self.temp_well_average,2))) #取小數後第二位
-            #上蓋平均
-            self.temp_lid_average = np.mean(self.temp_lid)
-            if (100>self.temp_lid_average > 90):
-                self.top_pf_com_value.setText("Pass")
-                self.temp_pf_result.append("Pass")
-            else:
-                self.top_pf_com_value.setText("Fail")
-                self.temp_pf_result.append("Fail")
-            self.top_com_value.setText(str(round(self.temp_lid_average,2))) #取小數後第二位
+        self.com_CH1_data = []
+        self.com_CH2_data = []
+        self.com_CH3_data = []
+        self.com_CH4_data = []
+        self.com_CH5_data = []
+        self.com_CH6_data = []
+        self.com_CH7_data = []
+        self.com_CH8_data = []
+        self.com_file_csv = pd.read_csv("./data/factory.csv", delimiter='\t')
+        print(self.com_file_csv)
 
-            print(self.temp_lid)
-            print(self.temp_well)
-            self.com_csv_chart()
-            # 取圖片
-            img = cv2.imread("EGGI_COM/temp_well.jpg")
-            img2 = cv2.imread("EGGI_COM/temp_lid.jpg")
+        for i in 
 
-            # 轉換影象通道
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
-            # 獲取影象大小
-            x = img.shape[1]
-            y = img.shape[0]
-            x2 = img2.shape[1]
-            y2 = img2.shape[0]
-
-            # 圖片放縮尺度
-            # self.zoomscale = 1
-            frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
-            self.pix = QPixmap.fromImage(frame)
-            frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
-            self.pix2 = QPixmap.fromImage(frame2)
-
-            # 建立畫素圖元
-            self.item = QGraphicsPixmapItem(self.pix)
-            self.item2 = QGraphicsPixmapItem(self.pix2)
-
-            # 建立場景
-            self.scene = QGraphicsScene()
-            self.scene2 = QGraphicsScene()
-            self.scene.addItem(self.item)
-            self.scene2.addItem(self.item2)
-
-            # 將場景新增至檢視
-            self.well_com_chart.setScene(self.scene)
-            self.top_com_chart.setScene(self.scene2)
-
-    
-    def com_csv_chart(self):
-        # ---------------temp_lid---------------------
-        plt.figure(figsize=(5, 3), dpi=100, linewidth=0)
-        plt.plot(self.com_total, self.temp_lid, 'o-', color='red', label="temp_lid")  # 紅
-        plt.xlim(0, len(self.com_file_csv.index))   # 設定x軸圖範圍
-        plt.ylim(70, 105)
-        plt.savefig('EGGI_COM/temp_lid.jpg')
-        # ---------------temp_well---------------------
-        plt.figure(figsize=(5, 3), dpi=100, linewidth=0)
-        plt.plot(self.com_total, self.temp_well, 'o-', color='blue', label="temp_well")  # 紅
-        plt.xlim(0, len(self.com_file_csv.index))   # 設定x軸圖範圍 
-        plt.ylim(30, 70)
-        plt.savefig('EGGI_COM/temp_well.jpg')
-    
-    def com_save(self):
-        if self.com_IP.text() == "" or self.com_ID.text() == "":
-            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
-                                    defaultButton=QtWidgets.QMessageBox.Ok)
-        else:
-            QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-            self.save_excel = pd.DataFrame({"ID": [self.com_ID.text()],
-                                            "eGGi IP": [self.com_IP.text()],
-                                            "Well槽": [str(round(self.temp_well_average,2))],
-                                            "Well Pass/Fail": [self.well_pf_result],
-                                            "上蓋": [str(round(self.temp_lid_average,2))],
-                                            "上蓋 Pass/Fail" :[self.temp_pf_result],
-                                            "eGGi IP": [self.com_IP.text()]
-                                            }, index=['Step'])
-            
-            # self.save_excel.to_excel('./result/history' + com_now_output +"output.xlsx",sheet_name = self.com_ID.text(),encoding="utf_8_sig")
-            if os.path.isfile('./result/history' + com_now_output +"output.xlsx"):
-                with pd.ExcelWriter(engine='openpyxl', path= './result/history' + com_now_output + 'output.xlsx', mode='a') as writer: # mode='a'現有檔案讀寫
-                    self.save_excel.to_excel(writer,sheet_name = self.com_ID.text(),encoding="utf_8_sig")
-            else:
-                self.save_excel.to_excel('./result/history' + com_now_output +"output.xlsx",sheet_name = self.com_ID.text(),encoding="utf_8_sig")
-            # with pd.ExcelWriter(engine='openpyxl', path= './result/history' + com_now_output + 'output.xlsx', mode='a') as writer: # mode='a'現有檔案讀寫
-            #     self.save_excel.to_excel(writer,sheet_name = self.com_ID.text(),encoding="utf_8_sig")
-            # print("儲存成功")
-
-    def com_clean(self):
-        self.well_com_value.setText("")
-        self.well_pf_com_value.setText("")
-        self.top_com_value.setText("")
-        self.com_IP.setText("")
-        self.com_ID.setText("")
-        self.top_pf_com_value.setText("")
-        self.well_com_chart.setScene(None)
-        self.top_com_chart.setScene(None)
-
-    def com_id_qrcode(self):
-        cap = cv2.VideoCapture(0)
-        while True:
-            ret, frame = cap.read()
-            cv2.imshow('scan qrcode', frame)
-            # 解析二維條碼
-            text = None
-            try:
-                text = scan_qrcode(frame)
-            except Exception as e:
-                pass
-            if text:
-                print(text)
-                self.com_ID.setText(text)
-                # self.qrcode_result1.append(text)
-                break
-            key = cv2.waitKey(10)
-            if key == ord('q'):
-                break
-        self.qrcode_result1.append("None")
-        cv2.destroyAllWindows()
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1138, 697)
+        MainWindow.resize(1138, 678)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
@@ -1343,7 +886,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.tab_Sulink = QtWidgets.QWidget()
         self.tab_Sulink.setObjectName("tab_Sulink")
         self.Input_box = QtWidgets.QGroupBox(self.tab_Sulink)
-        self.Input_box.setGeometry(QtCore.QRect(0, 6, 531, 157))
+        self.Input_box.setGeometry(QtCore.QRect(0, 6, 531, 151))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1357,52 +900,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
 "            border-color: rgb(156, 156, 156);\n"
 "        }")
         self.Input_box.setObjectName("Input_box")
-        self.layoutWidget = QtWidgets.QWidget(self.Input_box)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 30, 511, 109))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.layoutWidget)
+        self.widget = QtWidgets.QWidget(self.Input_box)
+        self.widget.setGeometry(QtCore.QRect(11, 44, 421, 73))
+        self.widget.setObjectName("widget")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.widget)
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.input_file = QtWidgets.QLineEdit(self.layoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setKerning(False)
-        self.input_file.setFont(font)
-        self.input_file.setObjectName("input_file")
-        self.gridLayout_2.addWidget(self.input_file, 1, 1, 1, 1)
-        self.btn_save = QtWidgets.QPushButton(self.layoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(75)
-        font.setStrikeOut(False)
-        font.setKerning(True)
-        self.btn_save.setFont(font)
-        self.btn_save.setObjectName("btn_save")
-        self.gridLayout_2.addWidget(self.btn_save, 1, 2, 1, 1)
-        self.input_name = QtWidgets.QLineEdit(self.layoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setKerning(False)
-        self.input_name.setFont(font)
-        self.input_name.setObjectName("input_name")
-        self.gridLayout_2.addWidget(self.input_name, 0, 1, 1, 1)
-        self.label_txt_2 = QtWidgets.QLabel(self.layoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(50)
-        font.setStrikeOut(False)
-        font.setKerning(False)
-        self.label_txt_2.setFont(font)
-        self.label_txt_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_txt_2.setObjectName("label_txt_2")
-        self.gridLayout_2.addWidget(self.label_txt_2, 1, 0, 1, 1)
-        self.label_name = QtWidgets.QLabel(self.layoutWidget)
+        self.label_name = QtWidgets.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(False)
@@ -1415,40 +919,80 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_name.setAlignment(QtCore.Qt.AlignCenter)
         self.label_name.setObjectName("label_name")
         self.gridLayout_2.addWidget(self.label_name, 0, 0, 1, 1)
-        self.btn_opentxt = QtWidgets.QPushButton(self.layoutWidget)
+        self.input_name = QtWidgets.QLineEdit(self.widget)
         font = QtGui.QFont()
         font.setPointSize(16)
-        font.setBold(True)
+        font.setKerning(False)
+        self.input_name.setFont(font)
+        self.input_name.setObjectName("input_name")
+        self.gridLayout_2.addWidget(self.input_name, 0, 1, 1, 1)
+        self.label_txt_2 = QtWidgets.QLabel(self.widget)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(False)
         font.setItalic(False)
         font.setUnderline(False)
-        font.setWeight(75)
+        font.setWeight(50)
+        font.setStrikeOut(False)
+        font.setKerning(False)
+        self.label_txt_2.setFont(font)
+        self.label_txt_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_txt_2.setObjectName("label_txt_2")
+        self.gridLayout_2.addWidget(self.label_txt_2, 1, 0, 1, 1)
+        self.input_file = QtWidgets.QLineEdit(self.widget)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setKerning(False)
+        self.input_file.setFont(font)
+        self.input_file.setObjectName("input_file")
+        self.gridLayout_2.addWidget(self.input_file, 1, 1, 1, 1)
+        self.widget1 = QtWidgets.QWidget(self.Input_box)
+        self.widget1.setGeometry(QtCore.QRect(440, 18, 77, 115))
+        self.widget1.setObjectName("widget1")
+        self.gridLayout_8 = QtWidgets.QGridLayout(self.widget1)
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.btn_opentxt = QtWidgets.QPushButton(self.widget1)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(50)
         font.setStrikeOut(False)
         font.setKerning(False)
         self.btn_opentxt.setFont(font)
         self.btn_opentxt.setObjectName("btn_opentxt")
-        self.gridLayout_2.addWidget(self.btn_opentxt, 0, 2, 1, 1)
-        self.btn_clean = QtWidgets.QPushButton(self.layoutWidget)
+        self.gridLayout_8.addWidget(self.btn_opentxt, 0, 0, 1, 1)
+        self.btn_save = QtWidgets.QPushButton(self.widget1)
         font = QtGui.QFont()
         font.setPointSize(16)
-        font.setBold(True)
+        font.setBold(False)
         font.setItalic(False)
         font.setUnderline(False)
-        font.setWeight(75)
+        font.setWeight(50)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.btn_save.setFont(font)
+        self.btn_save.setObjectName("btn_save")
+        self.gridLayout_8.addWidget(self.btn_save, 1, 0, 1, 1)
+        self.btn_clean = QtWidgets.QPushButton(self.widget1)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(50)
         font.setStrikeOut(False)
         font.setKerning(True)
         self.btn_clean.setFont(font)
         self.btn_clean.setObjectName("btn_clean")
-        self.gridLayout_2.addWidget(self.btn_clean, 2, 2, 1, 1)
+        self.gridLayout_8.addWidget(self.btn_clean, 2, 0, 1, 1)
         self.Chart_box = QtWidgets.QGroupBox(self.tab_Sulink)
         self.Chart_box.setGeometry(QtCore.QRect(0, 162, 531, 373))
         font = QtGui.QFont()
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-        font.setPointSize(12)
-        font.setBold(False)
-=======
         font.setPointSize(16)
         font.setBold(True)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
         font.setWeight(75)
         self.Chart_box.setFont(font)
         self.Chart_box.setObjectName("Chart_box")
@@ -1474,62 +1018,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.gridLayout_3 = QtWidgets.QGridLayout(self.layoutWidget_2)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.ch6_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch6_chart.setObjectName("ch6_chart")
-        self.gridLayout_3.addWidget(self.ch6_chart, 2, 1, 1, 1)
-        self.ch6_display = QtWidgets.QPushButton(self.layoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ch6_display.setFont(font)
-        self.ch6_display.setObjectName("ch6_display")
-        self.gridLayout_3.addWidget(self.ch6_display, 3, 1, 1, 1)
-        self.ch4_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch4_chart.setObjectName("ch4_chart")
-        self.gridLayout_3.addWidget(self.ch4_chart, 0, 3, 1, 1)
-        self.ch5_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch5_chart.setObjectName("ch5_chart")
-        self.gridLayout_3.addWidget(self.ch5_chart, 2, 0, 1, 1)
         self.ch2_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
         self.ch2_chart.setObjectName("ch2_chart")
         self.gridLayout_3.addWidget(self.ch2_chart, 0, 1, 1, 1)
-        self.ch3_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch3_chart.setObjectName("ch3_chart")
-        self.gridLayout_3.addWidget(self.ch3_chart, 0, 2, 1, 1)
-        self.ch8_display = QtWidgets.QPushButton(self.layoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ch8_display.setFont(font)
-        self.ch8_display.setObjectName("ch8_display")
-        self.gridLayout_3.addWidget(self.ch8_display, 3, 3, 1, 1)
-        self.ch7_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch7_chart.setObjectName("ch7_chart")
-        self.gridLayout_3.addWidget(self.ch7_chart, 2, 2, 1, 1)
-        self.ch1_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch1_chart.setObjectName("ch1_chart")
-        self.gridLayout_3.addWidget(self.ch1_chart, 0, 0, 1, 1)
-        self.ch7_display = QtWidgets.QPushButton(self.layoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ch7_display.setFont(font)
-        self.ch7_display.setObjectName("ch7_display")
-        self.gridLayout_3.addWidget(self.ch7_display, 3, 2, 1, 1)
-        self.ch8_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
-        self.ch8_chart.setObjectName("ch8_chart")
-        self.gridLayout_3.addWidget(self.ch8_chart, 2, 3, 1, 1)
-        self.ch5_display = QtWidgets.QPushButton(self.layoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ch5_display.setFont(font)
-        self.ch5_display.setObjectName("ch5_display")
-        self.gridLayout_3.addWidget(self.ch5_display, 3, 0, 1, 1)
+        self.ch6_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch6_chart.setObjectName("ch6_chart")
+        self.gridLayout_3.addWidget(self.ch6_chart, 2, 1, 1, 1)
         self.ch4_display = QtWidgets.QPushButton(self.layoutWidget_2)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1538,14 +1032,45 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch4_display.setFont(font)
         self.ch4_display.setObjectName("ch4_display")
         self.gridLayout_3.addWidget(self.ch4_display, 1, 3, 1, 1)
-        self.ch3_display = QtWidgets.QPushButton(self.layoutWidget_2)
+        self.ch7_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch7_chart.setObjectName("ch7_chart")
+        self.gridLayout_3.addWidget(self.ch7_chart, 2, 2, 1, 1)
+        self.ch4_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch4_chart.setObjectName("ch4_chart")
+        self.gridLayout_3.addWidget(self.ch4_chart, 0, 3, 1, 1)
+        self.ch7_display = QtWidgets.QPushButton(self.layoutWidget_2)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.ch3_display.setFont(font)
-        self.ch3_display.setObjectName("ch3_display")
-        self.gridLayout_3.addWidget(self.ch3_display, 1, 2, 1, 1)
+        self.ch7_display.setFont(font)
+        self.ch7_display.setObjectName("ch7_display")
+        self.gridLayout_3.addWidget(self.ch7_display, 3, 2, 1, 1)
+        self.ch3_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch3_chart.setObjectName("ch3_chart")
+        self.gridLayout_3.addWidget(self.ch3_chart, 0, 2, 1, 1)
+        self.ch5_display = QtWidgets.QPushButton(self.layoutWidget_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch5_display.setFont(font)
+        self.ch5_display.setObjectName("ch5_display")
+        self.gridLayout_3.addWidget(self.ch5_display, 3, 0, 1, 1)
+        self.ch6_display = QtWidgets.QPushButton(self.layoutWidget_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch6_display.setFont(font)
+        self.ch6_display.setObjectName("ch6_display")
+        self.gridLayout_3.addWidget(self.ch6_display, 3, 1, 1, 1)
+        self.ch8_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch8_chart.setObjectName("ch8_chart")
+        self.gridLayout_3.addWidget(self.ch8_chart, 2, 3, 1, 1)
+        self.ch1_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch1_chart.setObjectName("ch1_chart")
+        self.gridLayout_3.addWidget(self.ch1_chart, 0, 0, 1, 1)
         self.ch2_display = QtWidgets.QPushButton(self.layoutWidget_2)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1554,6 +1079,17 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch2_display.setFont(font)
         self.ch2_display.setObjectName("ch2_display")
         self.gridLayout_3.addWidget(self.ch2_display, 1, 1, 1, 1)
+        self.ch5_chart = QtWidgets.QGraphicsView(self.layoutWidget_2)
+        self.ch5_chart.setObjectName("ch5_chart")
+        self.gridLayout_3.addWidget(self.ch5_chart, 2, 0, 1, 1)
+        self.ch8_display = QtWidgets.QPushButton(self.layoutWidget_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch8_display.setFont(font)
+        self.ch8_display.setObjectName("ch8_display")
+        self.gridLayout_3.addWidget(self.ch8_display, 3, 3, 1, 1)
         self.ch1_display = QtWidgets.QPushButton(self.layoutWidget_2)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1562,21 +1098,29 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch1_display.setFont(font)
         self.ch1_display.setObjectName("ch1_display")
         self.gridLayout_3.addWidget(self.ch1_display, 1, 0, 1, 1)
+        self.ch3_display = QtWidgets.QPushButton(self.layoutWidget_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch3_display.setFont(font)
+        self.ch3_display.setObjectName("ch3_display")
+        self.gridLayout_3.addWidget(self.ch3_display, 1, 2, 1, 1)
         self.Result_box = QtWidgets.QGroupBox(self.tab_Sulink)
-        self.Result_box.setGeometry(QtCore.QRect(540, 6, 581, 529))
+        self.Result_box.setGeometry(QtCore.QRect(540, 6, 571, 529))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.Result_box.setFont(font)
         self.Result_box.setObjectName("Result_box")
-        self.layoutWidget1 = QtWidgets.QWidget(self.Result_box)
-        self.layoutWidget1.setGeometry(QtCore.QRect(10, 30, 561, 389))
-        self.layoutWidget1.setObjectName("layoutWidget1")
-        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget1)
+        self.layoutWidget = QtWidgets.QWidget(self.Result_box)
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 30, 551, 331))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.label_ch3 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch3 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1585,7 +1129,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch3.setObjectName("label_ch3")
         self.gridLayout.addWidget(self.label_ch3, 3, 0, 1, 1)
-        self.label_qrcode = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_qrcode = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(False)
@@ -1595,11 +1139,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_qrcode.setAlignment(QtCore.Qt.AlignCenter)
         self.label_qrcode.setObjectName("label_qrcode")
         self.gridLayout.addWidget(self.label_qrcode, 0, 2, 1, 1)
-        self.ch1_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch1_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch1_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch1_slope.setObjectName("ch1_slope")
         self.gridLayout.addWidget(self.ch1_slope, 1, 5, 1, 1)
-        self.label_T_On = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_T_On = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(False)
@@ -1609,51 +1153,51 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.label_T_On.setObjectName("label_T_On")
         self.gridLayout.addWidget(self.label_T_On, 0, 3, 1, 1)
-        self.ch4_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch4_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch4_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch4_T_Off.setObjectName("ch4_T_Off")
         self.gridLayout.addWidget(self.ch4_T_Off, 4, 4, 1, 1)
-        self.ch3_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch3_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch3_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch3_T_On.setObjectName("ch3_T_On")
         self.gridLayout.addWidget(self.ch3_T_On, 3, 3, 1, 1)
-        self.ch7_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch7_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch7_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch7_T_On.setObjectName("ch7_T_On")
         self.gridLayout.addWidget(self.ch7_T_On, 7, 3, 1, 1)
-        self.ch1_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch1_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch1_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch1_qrcodelable.setObjectName("ch1_qrcodelable")
         self.gridLayout.addWidget(self.ch1_qrcodelable, 1, 2, 1, 1)
-        self.ch6_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch6_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch6_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch6_PF.setObjectName("ch6_PF")
         self.gridLayout.addWidget(self.ch6_PF, 6, 6, 1, 1)
-        self.ch6_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch6_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch6_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch6_T_On.setObjectName("ch6_T_On")
         self.gridLayout.addWidget(self.ch6_T_On, 6, 3, 1, 1)
-        self.ch8_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch8_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch8_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch8_qrcodelable.setObjectName("ch8_qrcodelable")
         self.gridLayout.addWidget(self.ch8_qrcodelable, 8, 2, 1, 1)
-        self.ch8_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch8_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch8_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch8_PF.setObjectName("ch8_PF")
         self.gridLayout.addWidget(self.ch8_PF, 8, 6, 1, 1)
-        self.ch7_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch7_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch7_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch7_slope.setObjectName("ch7_slope")
         self.gridLayout.addWidget(self.ch7_slope, 7, 5, 1, 1)
-        self.ch3_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch3_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch3_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch3_qrcodelable.setObjectName("ch3_qrcodelable")
         self.gridLayout.addWidget(self.ch3_qrcodelable, 3, 2, 1, 1)
-        self.ch3_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch3_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch3_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch3_slope.setObjectName("ch3_slope")
         self.gridLayout.addWidget(self.ch3_slope, 3, 5, 1, 1)
-        self.label_ch1 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch1 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1662,7 +1206,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch1.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch1.setObjectName("label_ch1")
         self.gridLayout.addWidget(self.label_ch1, 1, 0, 1, 1)
-        self.ch1_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch1_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1670,15 +1214,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch1_qrcode.setFont(font)
         self.ch1_qrcode.setObjectName("ch1_qrcode")
         self.gridLayout.addWidget(self.ch1_qrcode, 1, 1, 1, 1)
-        self.ch1_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch1_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch1_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch1_T_Off.setObjectName("ch1_T_Off")
         self.gridLayout.addWidget(self.ch1_T_Off, 1, 4, 1, 1)
-        self.ch2_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch2_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch2_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch2_T_On.setObjectName("ch2_T_On")
         self.gridLayout.addWidget(self.ch2_T_On, 2, 3, 1, 1)
-        self.ch7_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch7_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1686,11 +1230,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch7_qrcode.setFont(font)
         self.ch7_qrcode.setObjectName("ch7_qrcode")
         self.gridLayout.addWidget(self.ch7_qrcode, 7, 1, 1, 1)
-        self.ch4_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch4_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch4_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch4_qrcodelable.setObjectName("ch4_qrcodelable")
         self.gridLayout.addWidget(self.ch4_qrcodelable, 4, 2, 1, 1)
-        self.label_Slope = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_Slope = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(False)
@@ -1700,7 +1244,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_Slope.setAlignment(QtCore.Qt.AlignCenter)
         self.label_Slope.setObjectName("label_Slope")
         self.gridLayout.addWidget(self.label_Slope, 0, 5, 1, 1)
-        self.label_ch5 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch5 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1709,7 +1253,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch5.setObjectName("label_ch5")
         self.gridLayout.addWidget(self.label_ch5, 5, 0, 1, 1)
-        self.ch3_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch3_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1717,7 +1261,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch3_qrcode.setFont(font)
         self.ch3_qrcode.setObjectName("ch3_qrcode")
         self.gridLayout.addWidget(self.ch3_qrcode, 3, 1, 1, 1)
-        self.ch4_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch4_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1725,27 +1269,27 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch4_qrcode.setFont(font)
         self.ch4_qrcode.setObjectName("ch4_qrcode")
         self.gridLayout.addWidget(self.ch4_qrcode, 4, 1, 1, 1)
-        self.ch8_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch8_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch8_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch8_slope.setObjectName("ch8_slope")
         self.gridLayout.addWidget(self.ch8_slope, 8, 5, 1, 1)
-        self.ch1_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch1_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch1_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch1_T_On.setObjectName("ch1_T_On")
         self.gridLayout.addWidget(self.ch1_T_On, 1, 3, 1, 1)
-        self.ch7_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch7_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch7_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch7_T_Off.setObjectName("ch7_T_Off")
         self.gridLayout.addWidget(self.ch7_T_Off, 7, 4, 1, 1)
-        self.ch2_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch2_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch2_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch2_PF.setObjectName("ch2_PF")
         self.gridLayout.addWidget(self.ch2_PF, 2, 6, 1, 1)
-        self.ch4_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch4_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch4_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch4_slope.setObjectName("ch4_slope")
         self.gridLayout.addWidget(self.ch4_slope, 4, 5, 1, 1)
-        self.ch2_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch2_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1753,15 +1297,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch2_qrcode.setFont(font)
         self.ch2_qrcode.setObjectName("ch2_qrcode")
         self.gridLayout.addWidget(self.ch2_qrcode, 2, 1, 1, 1)
-        self.ch1_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch1_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch1_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch1_PF.setObjectName("ch1_PF")
         self.gridLayout.addWidget(self.ch1_PF, 1, 6, 1, 1)
-        self.ch3_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch3_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch3_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch3_PF.setObjectName("ch3_PF")
         self.gridLayout.addWidget(self.ch3_PF, 3, 6, 1, 1)
-        self.label_ch4 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch4 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1770,11 +1314,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch4.setObjectName("label_ch4")
         self.gridLayout.addWidget(self.label_ch4, 4, 0, 1, 1)
-        self.ch5_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch5_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch5_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch5_slope.setObjectName("ch5_slope")
         self.gridLayout.addWidget(self.ch5_slope, 5, 5, 1, 1)
-        self.ch8_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch8_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1782,7 +1326,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_qrcode.setFont(font)
         self.ch8_qrcode.setObjectName("ch8_qrcode")
         self.gridLayout.addWidget(self.ch8_qrcode, 8, 1, 1, 1)
-        self.label_T_Off = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_T_Off = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(False)
@@ -1792,11 +1336,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.label_T_Off.setObjectName("label_T_Off")
         self.gridLayout.addWidget(self.label_T_Off, 0, 4, 1, 1)
-        self.ch5_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch5_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch5_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch5_PF.setObjectName("ch5_PF")
         self.gridLayout.addWidget(self.ch5_PF, 5, 6, 1, 1)
-        self.ch5_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch5_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1804,7 +1348,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch5_qrcode.setFont(font)
         self.ch5_qrcode.setObjectName("ch5_qrcode")
         self.gridLayout.addWidget(self.ch5_qrcode, 5, 1, 1, 1)
-        self.label_T_On_14 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_T_On_14 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(False)
@@ -1814,7 +1358,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_T_On_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_T_On_14.setObjectName("label_T_On_14")
         self.gridLayout.addWidget(self.label_T_On_14, 0, 6, 1, 1)
-        self.label_ch7 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch7 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1823,11 +1367,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch7.setObjectName("label_ch7")
         self.gridLayout.addWidget(self.label_ch7, 7, 0, 1, 1)
-        self.ch5_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch5_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch5_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch5_T_Off.setObjectName("ch5_T_Off")
         self.gridLayout.addWidget(self.ch5_T_Off, 5, 4, 1, 1)
-        self.label_ch2 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch2 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1836,15 +1380,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch2.setObjectName("label_ch2")
         self.gridLayout.addWidget(self.label_ch2, 2, 0, 1, 1)
-        self.ch5_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch5_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch5_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch5_T_On.setObjectName("ch5_T_On")
         self.gridLayout.addWidget(self.ch5_T_On, 5, 3, 1, 1)
-        self.ch4_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch4_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch4_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch4_PF.setObjectName("ch4_PF")
         self.gridLayout.addWidget(self.ch4_PF, 4, 6, 1, 1)
-        self.ch6_qrcode = QtWidgets.QPushButton(self.layoutWidget1)
+        self.ch6_qrcode = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -1852,19 +1396,19 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_qrcode.setFont(font)
         self.ch6_qrcode.setObjectName("ch6_qrcode")
         self.gridLayout.addWidget(self.ch6_qrcode, 6, 1, 1, 1)
-        self.ch7_PF = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch7_PF = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch7_PF.setAlignment(QtCore.Qt.AlignCenter)
         self.ch7_PF.setObjectName("ch7_PF")
         self.gridLayout.addWidget(self.ch7_PF, 7, 6, 1, 1)
-        self.ch8_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch8_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch8_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch8_T_Off.setObjectName("ch8_T_Off")
         self.gridLayout.addWidget(self.ch8_T_Off, 8, 4, 1, 1)
-        self.ch8_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch8_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch8_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch8_T_On.setObjectName("ch8_T_On")
         self.gridLayout.addWidget(self.ch8_T_On, 8, 3, 1, 1)
-        self.label_ch8 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch8 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1873,19 +1417,19 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch8.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch8.setObjectName("label_ch8")
         self.gridLayout.addWidget(self.label_ch8, 8, 0, 1, 1)
-        self.ch6_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch6_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch6_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch6_qrcodelable.setObjectName("ch6_qrcodelable")
         self.gridLayout.addWidget(self.ch6_qrcodelable, 6, 2, 1, 1)
-        self.ch2_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch2_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch2_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch2_qrcodelable.setObjectName("ch2_qrcodelable")
         self.gridLayout.addWidget(self.ch2_qrcodelable, 2, 2, 1, 1)
-        self.ch2_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch2_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch2_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch2_slope.setObjectName("ch2_slope")
         self.gridLayout.addWidget(self.ch2_slope, 2, 5, 1, 1)
-        self.label_ch6 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_ch6 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1894,35 +1438,35 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_ch6.setObjectName("label_ch6")
         self.gridLayout.addWidget(self.label_ch6, 6, 0, 1, 1)
-        self.ch5_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch5_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch5_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch5_qrcodelable.setObjectName("ch5_qrcodelable")
         self.gridLayout.addWidget(self.ch5_qrcodelable, 5, 2, 1, 1)
-        self.ch6_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch6_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch6_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch6_T_Off.setObjectName("ch6_T_Off")
         self.gridLayout.addWidget(self.ch6_T_Off, 6, 4, 1, 1)
-        self.ch3_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch3_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch3_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch3_T_Off.setObjectName("ch3_T_Off")
         self.gridLayout.addWidget(self.ch3_T_Off, 3, 4, 1, 1)
-        self.ch2_T_Off = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch2_T_Off = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch2_T_Off.setAlignment(QtCore.Qt.AlignCenter)
         self.ch2_T_Off.setObjectName("ch2_T_Off")
         self.gridLayout.addWidget(self.ch2_T_Off, 2, 4, 1, 1)
-        self.ch4_T_On = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch4_T_On = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch4_T_On.setAlignment(QtCore.Qt.AlignCenter)
         self.ch4_T_On.setObjectName("ch4_T_On")
         self.gridLayout.addWidget(self.ch4_T_On, 4, 3, 1, 1)
-        self.ch6_slope = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch6_slope = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch6_slope.setAlignment(QtCore.Qt.AlignCenter)
         self.ch6_slope.setObjectName("ch6_slope")
         self.gridLayout.addWidget(self.ch6_slope, 6, 5, 1, 1)
-        self.ch7_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.ch7_qrcodelable = QtWidgets.QLineEdit(self.layoutWidget)
         self.ch7_qrcodelable.setAlignment(QtCore.Qt.AlignCenter)
         self.ch7_qrcodelable.setObjectName("ch7_qrcodelable")
         self.gridLayout.addWidget(self.ch7_qrcodelable, 7, 2, 1, 1)
-        self.label_qrcode_3 = QtWidgets.QLabel(self.layoutWidget1)
+        self.label_qrcode_3 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(False)
@@ -1936,20 +1480,125 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.tab_hardware = QtWidgets.QWidget()
         self.tab_hardware.setObjectName("tab_hardware")
         self.Chart_box_com = QtWidgets.QGroupBox(self.tab_hardware)
-        self.Chart_box_com.setGeometry(QtCore.QRect(1, 211, 531, 349))
+        self.Chart_box_com.setGeometry(QtCore.QRect(0, 162, 531, 373))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.Chart_box_com.setFont(font)
         self.Chart_box_com.setObjectName("Chart_box_com")
-        self.gridLayout_4 = QtWidgets.QGridLayout(self.Chart_box_com)
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.well_com_chart = QtWidgets.QGraphicsView(self.Chart_box_com)
-        self.well_com_chart.setObjectName("well_com_chart")
-        self.gridLayout_4.addWidget(self.well_com_chart, 0, 0, 2, 2)
+        self.splitter_3 = QtWidgets.QSplitter(self.Chart_box_com)
+        self.splitter_3.setGeometry(QtCore.QRect(16, 156, 0, 0))
+        self.splitter_3.setOrientation(QtCore.Qt.Vertical)
+        self.splitter_3.setObjectName("splitter_3")
+        self.widget_9 = QtWidgets.QWidget(self.splitter_3)
+        self.widget_9.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.widget_9.setObjectName("widget_9")
+        self.widget_10 = QtWidgets.QWidget(self.splitter_3)
+        self.widget_10.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.widget_10.setObjectName("widget_10")
+        self.widget_11 = QtWidgets.QWidget(self.splitter_3)
+        self.widget_11.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.widget_11.setObjectName("widget_11")
+        self.widget_12 = QtWidgets.QWidget(self.splitter_3)
+        self.widget_12.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.widget_12.setObjectName("widget_12")
+        self.layoutWidget_4 = QtWidgets.QWidget(self.Chart_box_com)
+        self.layoutWidget_4.setGeometry(QtCore.QRect(10, 30, 511, 319))
+        self.layoutWidget_4.setObjectName("layoutWidget_4")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.layoutWidget_4)
+        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.ch2_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch2_chart_com.setObjectName("ch2_chart_com")
+        self.gridLayout_5.addWidget(self.ch2_chart_com, 0, 1, 1, 1)
+        self.ch6_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch6_chart_com.setObjectName("ch6_chart_com")
+        self.gridLayout_5.addWidget(self.ch6_chart_com, 2, 1, 1, 1)
+        self.ch4_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch4_display_com.setFont(font)
+        self.ch4_display_com.setObjectName("ch4_display_com")
+        self.gridLayout_5.addWidget(self.ch4_display_com, 1, 3, 1, 1)
+        self.ch7_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch7_chart_com.setObjectName("ch7_chart_com")
+        self.gridLayout_5.addWidget(self.ch7_chart_com, 2, 2, 1, 1)
+        self.ch4_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch4_chart_com.setObjectName("ch4_chart_com")
+        self.gridLayout_5.addWidget(self.ch4_chart_com, 0, 3, 1, 1)
+        self.ch7_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch7_display_com.setFont(font)
+        self.ch7_display_com.setObjectName("ch7_display_com")
+        self.gridLayout_5.addWidget(self.ch7_display_com, 3, 2, 1, 1)
+        self.ch3_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch3_chart_com.setObjectName("ch3_chart_com")
+        self.gridLayout_5.addWidget(self.ch3_chart_com, 0, 2, 1, 1)
+        self.ch5_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch5_display_com.setFont(font)
+        self.ch5_display_com.setObjectName("ch5_display_com")
+        self.gridLayout_5.addWidget(self.ch5_display_com, 3, 0, 1, 1)
+        self.ch6_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch6_display_com.setFont(font)
+        self.ch6_display_com.setObjectName("ch6_display_com")
+        self.gridLayout_5.addWidget(self.ch6_display_com, 3, 1, 1, 1)
+        self.ch8_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch8_chart_com.setObjectName("ch8_chart_com")
+        self.gridLayout_5.addWidget(self.ch8_chart_com, 2, 3, 1, 1)
+        self.ch1_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch1_chart_com.setObjectName("ch1_chart_com")
+        self.gridLayout_5.addWidget(self.ch1_chart_com, 0, 0, 1, 1)
+        self.ch2_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch2_display_com.setFont(font)
+        self.ch2_display_com.setObjectName("ch2_display_com")
+        self.gridLayout_5.addWidget(self.ch2_display_com, 1, 1, 1, 1)
+        self.ch5_chart_com = QtWidgets.QGraphicsView(self.layoutWidget_4)
+        self.ch5_chart_com.setObjectName("ch5_chart_com")
+        self.gridLayout_5.addWidget(self.ch5_chart_com, 2, 0, 1, 1)
+        self.ch8_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch8_display_com.setFont(font)
+        self.ch8_display_com.setObjectName("ch8_display_com")
+        self.gridLayout_5.addWidget(self.ch8_display_com, 3, 3, 1, 1)
+        self.ch1_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch1_display_com.setFont(font)
+        self.ch1_display_com.setObjectName("ch1_display_com")
+        self.gridLayout_5.addWidget(self.ch1_display_com, 1, 0, 1, 1)
+        self.ch3_display_com = QtWidgets.QPushButton(self.layoutWidget_4)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch3_display_com.setFont(font)
+        self.ch3_display_com.setObjectName("ch3_display_com")
+        self.gridLayout_5.addWidget(self.ch3_display_com, 1, 2, 1, 1)
         self.Input_box_com = QtWidgets.QGroupBox(self.tab_hardware)
-        self.Input_box_com.setGeometry(QtCore.QRect(0, 6, 531, 199))
+        self.Input_box_com.setGeometry(QtCore.QRect(0, 6, 531, 157))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -1963,74 +1612,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
 "            border-color: rgb(156, 156, 156);\n"
 "        }")
         self.Input_box_com.setObjectName("Input_box_com")
-        self.layoutWidget2 = QtWidgets.QWidget(self.Input_box_com)
-        self.layoutWidget2.setGeometry(QtCore.QRect(10, 30, 511, 151))
-        self.layoutWidget2.setObjectName("layoutWidget2")
-        self.gridLayout_6 = QtWidgets.QGridLayout(self.layoutWidget2)
+        self.widget2 = QtWidgets.QWidget(self.Input_box_com)
+        self.widget2.setGeometry(QtCore.QRect(10, 30, 511, 115))
+        self.widget2.setObjectName("widget2")
+        self.gridLayout_6 = QtWidgets.QGridLayout(self.widget2)
         self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_6.setObjectName("gridLayout_6")
-        self.btn_opentxt_com = QtWidgets.QPushButton(self.layoutWidget2)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(75)
-        font.setStrikeOut(False)
-        font.setKerning(False)
-        self.btn_opentxt_com.setFont(font)
-        self.btn_opentxt_com.setObjectName("btn_opentxt_com")
-        self.gridLayout_6.addWidget(self.btn_opentxt_com, 0, 2, 1, 1)
-        self.ID_name_com = QtWidgets.QLabel(self.layoutWidget2)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(50)
-        font.setStrikeOut(False)
-        font.setKerning(False)
-        self.ID_name_com.setFont(font)
-        self.ID_name_com.setAlignment(QtCore.Qt.AlignCenter)
-        self.ID_name_com.setObjectName("ID_name_com")
-        self.gridLayout_6.addWidget(self.ID_name_com, 2, 0, 1, 1)
-        self.btn_save_com = QtWidgets.QPushButton(self.layoutWidget2)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(75)
-        font.setStrikeOut(False)
-        font.setKerning(True)
-        self.btn_save_com.setFont(font)
-        self.btn_save_com.setObjectName("btn_save_com")
-        self.gridLayout_6.addWidget(self.btn_save_com, 3, 2, 1, 1)
-        self.btn_clean_com = QtWidgets.QPushButton(self.layoutWidget2)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(75)
-        font.setStrikeOut(False)
-        font.setKerning(True)
-        self.btn_clean_com.setFont(font)
-        self.btn_clean_com.setObjectName("btn_clean_com")
-        self.gridLayout_6.addWidget(self.btn_clean_com, 4, 2, 1, 1)
-        self.btn_save_com_2 = QtWidgets.QPushButton(self.layoutWidget2)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(75)
-        font.setStrikeOut(False)
-        font.setKerning(True)
-        self.btn_save_com_2.setFont(font)
-        self.btn_save_com_2.setObjectName("btn_save_com_2")
-        self.gridLayout_6.addWidget(self.btn_save_com_2, 2, 2, 1, 1)
-        self.IP_name_com = QtWidgets.QLabel(self.layoutWidget2)
+        self.IP_name_com = QtWidgets.QLabel(self.widget2)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(False)
@@ -2043,22 +1631,71 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.IP_name_com.setAlignment(QtCore.Qt.AlignCenter)
         self.IP_name_com.setObjectName("IP_name_com")
         self.gridLayout_6.addWidget(self.IP_name_com, 0, 0, 1, 1)
-        self.com_ID = QtWidgets.QLineEdit(self.layoutWidget2)
+        self.com_ID = QtWidgets.QLineEdit(self.widget2)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setKerning(False)
         self.com_ID.setFont(font)
         self.com_ID.setObjectName("com_ID")
-        self.gridLayout_6.addWidget(self.com_ID, 2, 1, 1, 1)
-        self.com_IP = QtWidgets.QLineEdit(self.layoutWidget2)
+        self.gridLayout_6.addWidget(self.com_ID, 0, 1, 1, 1)
+        self.btn_opentxt_com = QtWidgets.QPushButton(self.widget2)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(False)
+        self.btn_opentxt_com.setFont(font)
+        self.btn_opentxt_com.setObjectName("btn_opentxt_com")
+        self.gridLayout_6.addWidget(self.btn_opentxt_com, 0, 2, 1, 1)
+        self.ID_name_com = QtWidgets.QLabel(self.widget2)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(50)
+        font.setStrikeOut(False)
+        font.setKerning(False)
+        self.ID_name_com.setFont(font)
+        self.ID_name_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ID_name_com.setObjectName("ID_name_com")
+        self.gridLayout_6.addWidget(self.ID_name_com, 1, 0, 1, 1)
+        self.com_IP = QtWidgets.QLineEdit(self.widget2)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setKerning(False)
         self.com_IP.setFont(font)
         self.com_IP.setObjectName("com_IP")
-        self.gridLayout_6.addWidget(self.com_IP, 0, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.com_IP, 1, 1, 1, 1)
+        self.btn_save_com = QtWidgets.QPushButton(self.widget2)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.btn_save_com.setFont(font)
+        self.btn_save_com.setObjectName("btn_save_com")
+        self.gridLayout_6.addWidget(self.btn_save_com, 1, 2, 1, 1)
+        self.btn_clean_com = QtWidgets.QPushButton(self.widget2)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.btn_clean_com.setFont(font)
+        self.btn_clean_com.setObjectName("btn_clean_com")
+        self.gridLayout_6.addWidget(self.btn_clean_com, 2, 2, 1, 1)
         self.Result_box_com = QtWidgets.QGroupBox(self.tab_hardware)
-        self.Result_box_com.setGeometry(QtCore.QRect(540, 6, 571, 199))
+        self.Result_box_com.setGeometry(QtCore.QRect(540, 6, 571, 529))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -2066,44 +1703,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.Result_box_com.setFont(font)
         self.Result_box_com.setObjectName("Result_box_com")
         self.layoutWidget_7 = QtWidgets.QWidget(self.Result_box_com)
-        self.layoutWidget_7.setGeometry(QtCore.QRect(20, 30, 541, 73))
+        self.layoutWidget_7.setGeometry(QtCore.QRect(10, 30, 551, 347))
         self.layoutWidget_7.setObjectName("layoutWidget_7")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.layoutWidget_7)
         self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_7.setObjectName("gridLayout_7")
-        self.top_pf_com_value = QtWidgets.QLineEdit(self.layoutWidget_7)
-        self.top_pf_com_value.setAlignment(QtCore.Qt.AlignCenter)
-        self.top_pf_com_value.setObjectName("top_pf_com_value")
-        self.gridLayout_7.addWidget(self.top_pf_com_value, 1, 4, 1, 1)
-        self.well_com = QtWidgets.QLabel(self.layoutWidget_7)
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        font.setBold(False)
-        font.setWeight(50)
-        font.setKerning(False)
-        self.well_com.setFont(font)
-        self.well_com.setAlignment(QtCore.Qt.AlignCenter)
-        self.well_com.setObjectName("well_com")
-        self.gridLayout_7.addWidget(self.well_com, 0, 1, 1, 1)
-        self.label_step = QtWidgets.QLabel(self.layoutWidget_7)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_step.setFont(font)
-        self.label_step.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_step.setObjectName("label_step")
-        self.gridLayout_7.addWidget(self.label_step, 1, 0, 1, 1)
-        self.well_pf_com = QtWidgets.QLabel(self.layoutWidget_7)
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        font.setBold(False)
-        font.setWeight(50)
-        font.setKerning(False)
-        self.well_pf_com.setFont(font)
-        self.well_pf_com.setAlignment(QtCore.Qt.AlignCenter)
-        self.well_pf_com.setObjectName("well_pf_com")
-        self.gridLayout_7.addWidget(self.well_pf_com, 0, 2, 1, 1)
         self.top_pf_com = QtWidgets.QLabel(self.layoutWidget_7)
         font = QtGui.QFont()
         font.setPointSize(13)
@@ -2113,19 +1717,47 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.top_pf_com.setFont(font)
         self.top_pf_com.setAlignment(QtCore.Qt.AlignCenter)
         self.top_pf_com.setObjectName("top_pf_com")
-        self.gridLayout_7.addWidget(self.top_pf_com, 0, 4, 1, 1)
-        self.well_com_value = QtWidgets.QLineEdit(self.layoutWidget_7)
-        self.well_com_value.setAlignment(QtCore.Qt.AlignCenter)
-        self.well_com_value.setObjectName("well_com_value")
-        self.gridLayout_7.addWidget(self.well_com_value, 1, 1, 1, 1)
-        self.well_pf_com_value = QtWidgets.QLineEdit(self.layoutWidget_7)
-        self.well_pf_com_value.setAlignment(QtCore.Qt.AlignCenter)
-        self.well_pf_com_value.setObjectName("well_pf_com_value")
-        self.gridLayout_7.addWidget(self.well_pf_com_value, 1, 2, 1, 1)
-        self.top_com_value = QtWidgets.QLineEdit(self.layoutWidget_7)
-        self.top_com_value.setAlignment(QtCore.Qt.AlignCenter)
-        self.top_com_value.setObjectName("top_com_value")
-        self.gridLayout_7.addWidget(self.top_com_value, 1, 3, 1, 1)
+        self.gridLayout_7.addWidget(self.top_pf_com, 0, 6, 1, 1)
+        self.ch8_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch8_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch8_qrcodelable_com.setObjectName("ch8_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch8_qrcodelable_com, 8, 2, 1, 1)
+        self.ch1_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch1_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch1_qrcodelable_com.setObjectName("ch1_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch1_qrcodelable_com, 1, 2, 1, 1)
+        self.ch6_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch6_qrcode_com.setFont(font)
+        self.ch6_qrcode_com.setObjectName("ch6_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch6_qrcode_com, 6, 1, 1, 1)
+        self.ch6_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch6_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch6_PF_com.setObjectName("ch6_PF_com")
+        self.gridLayout_7.addWidget(self.ch6_PF_com, 6, 6, 1, 1)
+        self.ch5_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch5_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch5_T_On_com.setObjectName("ch5_T_On_com")
+        self.gridLayout_7.addWidget(self.ch5_T_On_com, 5, 3, 1, 1)
+        self.ch2_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch2_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch2_T_On_com.setObjectName("ch2_T_On_com")
+        self.gridLayout_7.addWidget(self.ch2_T_On_com, 2, 3, 1, 1)
+        self.ch4_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch4_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_T_Off_com.setObjectName("ch4_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch4_T_Off_com, 4, 4, 1, 1)
+        self.ch3_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch3_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_T_Off_com.setObjectName("ch3_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch3_T_Off_com, 3, 4, 1, 1)
+        self.ch7_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch7_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch7_slope_com.setObjectName("ch7_slope_com")
+        self.gridLayout_7.addWidget(self.ch7_slope_com, 7, 5, 1, 1)
         self.top_com = QtWidgets.QLabel(self.layoutWidget_7)
         font = QtGui.QFont()
         font.setPointSize(13)
@@ -2135,20 +1767,303 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.top_com.setFont(font)
         self.top_com.setAlignment(QtCore.Qt.AlignCenter)
         self.top_com.setObjectName("top_com")
-        self.gridLayout_7.addWidget(self.top_com, 0, 3, 1, 1)
-        self.Chart_box_com_2 = QtWidgets.QGroupBox(self.tab_hardware)
-        self.Chart_box_com_2.setGeometry(QtCore.QRect(540, 210, 571, 349))
+        self.gridLayout_7.addWidget(self.top_com, 0, 5, 1, 1)
+        self.ch4_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch4_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_slope_com.setObjectName("ch4_slope_com")
+        self.gridLayout_7.addWidget(self.ch4_slope_com, 4, 5, 1, 1)
+        self.ch7_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch7_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch7_qrcodelable_com.setObjectName("ch7_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch7_qrcodelable_com, 7, 2, 1, 1)
+        self.ch1_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch1_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch1_T_On_com.setObjectName("ch1_T_On_com")
+        self.gridLayout_7.addWidget(self.ch1_T_On_com, 1, 3, 1, 1)
+        self.ch3_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch3_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_PF_com.setObjectName("ch3_PF_com")
+        self.gridLayout_7.addWidget(self.ch3_PF_com, 3, 6, 1, 1)
+        self.ch7_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch7_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch7_T_Off_com.setObjectName("ch7_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch7_T_Off_com, 7, 4, 1, 1)
+        self.ch7_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch7_qrcode_com.setFont(font)
+        self.ch7_qrcode_com.setObjectName("ch7_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch7_qrcode_com, 7, 1, 1, 1)
+        self.ch7_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch7_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch7_PF_com.setObjectName("ch7_PF_com")
+        self.gridLayout_7.addWidget(self.ch7_PF_com, 7, 6, 1, 1)
+        self.label_ch2_3 = QtWidgets.QLabel(self.layoutWidget_7)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.Chart_box_com_2.setFont(font)
-        self.Chart_box_com_2.setObjectName("Chart_box_com_2")
-        self.gridLayout_8 = QtWidgets.QGridLayout(self.Chart_box_com_2)
-        self.gridLayout_8.setObjectName("gridLayout_8")
-        self.top_com_chart = QtWidgets.QGraphicsView(self.Chart_box_com_2)
-        self.top_com_chart.setObjectName("top_com_chart")
-        self.gridLayout_8.addWidget(self.top_com_chart, 0, 0, 2, 2)
+        self.label_ch2_3.setFont(font)
+        self.label_ch2_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch2_3.setObjectName("label_ch2_3")
+        self.gridLayout_7.addWidget(self.label_ch2_3, 2, 0, 1, 1)
+        self.ch8_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch8_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch8_T_Off_com.setObjectName("ch8_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch8_T_Off_com, 8, 4, 1, 1)
+        self.ch4_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch4_qrcode_com.setFont(font)
+        self.ch4_qrcode_com.setObjectName("ch4_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch4_qrcode_com, 4, 1, 1, 1)
+        self.ch8_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch8_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch8_slope_com.setObjectName("ch8_slope_com")
+        self.gridLayout_7.addWidget(self.ch8_slope_com, 8, 5, 1, 1)
+        self.ch2_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch2_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch2_T_Off_com.setObjectName("ch2_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch2_T_Off_com, 2, 4, 1, 1)
+        self.ch3_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch3_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_T_On_com.setObjectName("ch3_T_On_com")
+        self.gridLayout_7.addWidget(self.ch3_T_On_com, 3, 3, 1, 1)
+        self.ch5_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch5_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch5_PF_com.setObjectName("ch5_PF_com")
+        self.gridLayout_7.addWidget(self.ch5_PF_com, 5, 6, 1, 1)
+        self.ch8_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch8_qrcode_com.setFont(font)
+        self.ch8_qrcode_com.setObjectName("ch8_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch8_qrcode_com, 8, 1, 1, 1)
+        self.ch1_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch1_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch1_T_Off_com.setObjectName("ch1_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch1_T_Off_com, 1, 4, 1, 1)
+        self.ch6_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch6_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch6_T_Off_com.setObjectName("ch6_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch6_T_Off_com, 6, 4, 1, 1)
+        self.ch4_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch4_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_qrcodelable_com.setObjectName("ch4_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch4_qrcodelable_com, 4, 2, 1, 1)
+        self.ch6_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch6_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch6_T_On_com.setObjectName("ch6_T_On_com")
+        self.gridLayout_7.addWidget(self.ch6_T_On_com, 6, 3, 1, 1)
+        self.ch7_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch7_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch7_T_On_com.setObjectName("ch7_T_On_com")
+        self.gridLayout_7.addWidget(self.ch7_T_On_com, 7, 3, 1, 1)
+        self.ch2_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch2_qrcode_com.setFont(font)
+        self.ch2_qrcode_com.setObjectName("ch2_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch2_qrcode_com, 2, 1, 1, 1)
+        self.ch2_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch2_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch2_slope_com.setObjectName("ch2_slope_com")
+        self.gridLayout_7.addWidget(self.ch2_slope_com, 2, 5, 1, 1)
+        self.ch5_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch5_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch5_qrcodelable_com.setObjectName("ch5_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch5_qrcodelable_com, 5, 2, 1, 1)
+        self.label_ch1_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch1_3.setFont(font)
+        self.label_ch1_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch1_3.setObjectName("label_ch1_3")
+        self.gridLayout_7.addWidget(self.label_ch1_3, 1, 0, 1, 1)
+        self.label_ch8_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch8_3.setFont(font)
+        self.label_ch8_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch8_3.setObjectName("label_ch8_3")
+        self.gridLayout_7.addWidget(self.label_ch8_3, 8, 0, 1, 1)
+        self.ch5_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch5_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch5_slope_com.setObjectName("ch5_slope_com")
+        self.gridLayout_7.addWidget(self.ch5_slope_com, 5, 5, 1, 1)
+        self.ch3_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch3_qrcode_com.setFont(font)
+        self.ch3_qrcode_com.setObjectName("ch3_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch3_qrcode_com, 3, 1, 1, 1)
+        self.label_ch6_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch6_3.setFont(font)
+        self.label_ch6_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch6_3.setObjectName("label_ch6_3")
+        self.gridLayout_7.addWidget(self.label_ch6_3, 6, 0, 1, 1)
+        self.ch6_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch6_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch6_slope_com.setObjectName("ch6_slope_com")
+        self.gridLayout_7.addWidget(self.ch6_slope_com, 6, 5, 1, 1)
+        self.ch8_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch8_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch8_PF_com.setObjectName("ch8_PF_com")
+        self.gridLayout_7.addWidget(self.ch8_PF_com, 8, 6, 1, 1)
+        self.ch4_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch4_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_T_On_com.setObjectName("ch4_T_On_com")
+        self.gridLayout_7.addWidget(self.ch4_T_On_com, 4, 3, 1, 1)
+        self.label_ch4_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch4_3.setFont(font)
+        self.label_ch4_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch4_3.setObjectName("label_ch4_3")
+        self.gridLayout_7.addWidget(self.label_ch4_3, 4, 0, 1, 1)
+        self.ch1_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch1_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch1_PF_com.setObjectName("ch1_PF_com")
+        self.gridLayout_7.addWidget(self.ch1_PF_com, 1, 6, 1, 1)
+        self.ch2_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch2_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch2_PF_com.setObjectName("ch2_PF_com")
+        self.gridLayout_7.addWidget(self.ch2_PF_com, 2, 6, 1, 1)
+        self.ch4_PF_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch4_PF_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch4_PF_com.setObjectName("ch4_PF_com")
+        self.gridLayout_7.addWidget(self.ch4_PF_com, 4, 6, 1, 1)
+        self.ch3_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch3_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_qrcodelable_com.setObjectName("ch3_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch3_qrcodelable_com, 3, 2, 1, 1)
+        self.well_pf_com = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(False)
+        font.setWeight(50)
+        font.setKerning(False)
+        self.well_pf_com.setFont(font)
+        self.well_pf_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.well_pf_com.setObjectName("well_pf_com")
+        self.gridLayout_7.addWidget(self.well_pf_com, 0, 4, 1, 1)
+        self.label_qrcode_6 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(False)
+        font.setWeight(50)
+        font.setKerning(False)
+        self.label_qrcode_6.setFont(font)
+        self.label_qrcode_6.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_qrcode_6.setObjectName("label_qrcode_6")
+        self.gridLayout_7.addWidget(self.label_qrcode_6, 0, 1, 1, 1)
+        self.ch3_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch3_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch3_slope_com.setObjectName("ch3_slope_com")
+        self.gridLayout_7.addWidget(self.ch3_slope_com, 3, 5, 1, 1)
+        self.com_qrcode_name = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(False)
+        font.setWeight(50)
+        font.setKerning(False)
+        self.com_qrcode_name.setFont(font)
+        self.com_qrcode_name.setAlignment(QtCore.Qt.AlignCenter)
+        self.com_qrcode_name.setObjectName("com_qrcode_name")
+        self.gridLayout_7.addWidget(self.com_qrcode_name, 0, 2, 1, 1)
+        self.ch1_slope_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch1_slope_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch1_slope_com.setObjectName("ch1_slope_com")
+        self.gridLayout_7.addWidget(self.ch1_slope_com, 1, 5, 1, 1)
+        self.label_ch7_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch7_3.setFont(font)
+        self.label_ch7_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch7_3.setObjectName("label_ch7_3")
+        self.gridLayout_7.addWidget(self.label_ch7_3, 7, 0, 1, 1)
+        self.ch5_T_Off_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch5_T_Off_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch5_T_Off_com.setObjectName("ch5_T_Off_com")
+        self.gridLayout_7.addWidget(self.ch5_T_Off_com, 5, 4, 1, 1)
+        self.ch8_T_On_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch8_T_On_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch8_T_On_com.setObjectName("ch8_T_On_com")
+        self.gridLayout_7.addWidget(self.ch8_T_On_com, 8, 3, 1, 1)
+        self.label_ch5_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch5_3.setFont(font)
+        self.label_ch5_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch5_3.setObjectName("label_ch5_3")
+        self.gridLayout_7.addWidget(self.label_ch5_3, 5, 0, 1, 1)
+        self.ch6_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch6_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch6_qrcodelable_com.setObjectName("ch6_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch6_qrcodelable_com, 6, 2, 1, 1)
+        self.ch2_qrcodelable_com = QtWidgets.QLineEdit(self.layoutWidget_7)
+        self.ch2_qrcodelable_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.ch2_qrcodelable_com.setObjectName("ch2_qrcodelable_com")
+        self.gridLayout_7.addWidget(self.ch2_qrcodelable_com, 2, 2, 1, 1)
+        self.label_ch3_3 = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_ch3_3.setFont(font)
+        self.label_ch3_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_ch3_3.setObjectName("label_ch3_3")
+        self.gridLayout_7.addWidget(self.label_ch3_3, 3, 0, 1, 1)
+        self.ch1_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch1_qrcode_com.setFont(font)
+        self.ch1_qrcode_com.setObjectName("ch1_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch1_qrcode_com, 1, 1, 1, 1)
+        self.ch5_qrcode_com = QtWidgets.QPushButton(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ch5_qrcode_com.setFont(font)
+        self.ch5_qrcode_com.setObjectName("ch5_qrcode_com")
+        self.gridLayout_7.addWidget(self.ch5_qrcode_com, 5, 1, 1, 1)
+        self.well_com = QtWidgets.QLabel(self.layoutWidget_7)
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(False)
+        font.setWeight(50)
+        font.setKerning(False)
+        self.well_com.setFont(font)
+        self.well_com.setAlignment(QtCore.Qt.AlignCenter)
+        self.well_com.setObjectName("well_com")
+        self.gridLayout_7.addWidget(self.well_com, 0, 3, 1, 1)
         self.tabWidget.addTab(self.tab_hardware, "")
         self.EGGI_Title = QtWidgets.QLabel(self.centralwidget)
         self.EGGI_Title.setGeometry(QtCore.QRect(0, 0, 1131, 85))
@@ -2163,12 +2078,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.EGGI_Title.setStyleSheet("background-color: rgb(85, 255, 255);")
         self.EGGI_Title.setAlignment(QtCore.Qt.AlignCenter)
         self.EGGI_Title.setObjectName("EGGI_Title")
-        self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(0, 0, 2, 2))
-        self.widget.setObjectName("widget")
-        self.gridLayout_5 = QtWidgets.QGridLayout(self.widget)
-        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_5.setObjectName("gridLayout_5")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -2178,6 +2087,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.btn_clean.clicked.connect(self.clean_log)
+        # self.com_btn_opentxt.clicked.connect(self.com_browsefile)
         self.btn_opentxt.clicked.connect(self.browsefile)
         self.btn_save.clicked.connect(self.save_log)
         self.ch1_qrcode.clicked.connect(self.qrcode1)
@@ -2198,33 +2108,25 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch8_display.clicked.connect(self.display8)
         self.input_name.text() #輸入操作人員
         self.btn_opentxt_com.clicked.connect(self.com_csv)
-        self.btn_save_com.clicked.connect(self.com_save)
-        self.btn_save_com_2.clicked.connect(self.com_id_qrcode)
-        self.btn_clean_com.clicked.connect(self.com_clean)
-        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-        MainWindow.setWindowTitle(_translate("MainWindow", "溫度產測軟體"))
-=======
-        MainWindow.setWindowTitle(_translate("MainWindow", "溫度數據監控"))
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
-        self.btn_save.setText(_translate("MainWindow", "儲存"))
-        self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
         self.label_name.setText(_translate("MainWindow", "ID"))
-        self.btn_opentxt.setText(_translate("MainWindow", "連接"))
+        self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))
+        self.btn_opentxt.setText(_translate("MainWindow", "打開"))
+        self.btn_save.setText(_translate("MainWindow", "儲存"))
         self.btn_clean.setText(_translate("MainWindow", "清除"))
         self.Chart_box.setTitle(_translate("MainWindow", "Chart"))
-        self.ch6_display.setText(_translate("MainWindow", "顯示CH6"))
-        self.ch8_display.setText(_translate("MainWindow", "顯示CH8"))
+        self.ch4_display.setText(_translate("MainWindow", "顯示CH4"))
         self.ch7_display.setText(_translate("MainWindow", "顯示CH7"))
         self.ch5_display.setText(_translate("MainWindow", "顯示CH5"))
-        self.ch4_display.setText(_translate("MainWindow", "顯示CH4"))
-        self.ch3_display.setText(_translate("MainWindow", "顯示CH3"))
+        self.ch6_display.setText(_translate("MainWindow", "顯示CH6"))
         self.ch2_display.setText(_translate("MainWindow", "顯示CH2"))
+        self.ch8_display.setText(_translate("MainWindow", "顯示CH8"))
         self.ch1_display.setText(_translate("MainWindow", "顯示CH1"))
+        self.ch3_display.setText(_translate("MainWindow", "顯示CH3"))
         self.Result_box.setTitle(_translate("MainWindow", "Result"))
         self.label_ch3.setText(_translate("MainWindow", "CH3"))
         self.label_qrcode.setText(_translate("MainWindow", "QRCODE"))
@@ -2249,23 +2151,47 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.label_ch6.setText(_translate("MainWindow", "CH6"))
         self.label_qrcode_3.setText(_translate("MainWindow", "READ"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Sulink), _translate("MainWindow", "溫度保護器"))
-        self.Chart_box_com.setTitle(_translate("MainWindow", "Well"))
+        self.Chart_box_com.setTitle(_translate("MainWindow", "Chart"))
+        self.ch4_display_com.setText(_translate("MainWindow", "顯示CH4"))
+        self.ch7_display_com.setText(_translate("MainWindow", "顯示CH7"))
+        self.ch5_display_com.setText(_translate("MainWindow", "顯示CH5"))
+        self.ch6_display_com.setText(_translate("MainWindow", "顯示CH6"))
+        self.ch2_display_com.setText(_translate("MainWindow", "顯示CH2"))
+        self.ch8_display_com.setText(_translate("MainWindow", "顯示CH8"))
+        self.ch1_display_com.setText(_translate("MainWindow", "顯示CH1"))
+        self.ch3_display_com.setText(_translate("MainWindow", "顯示CH3"))
         self.Input_box_com.setTitle(_translate("MainWindow", "Input"))
-        self.btn_opentxt_com.setText(_translate("MainWindow", "連接"))
+        self.IP_name_com.setText(_translate("MainWindow", "eGGi IP"))
+        self.btn_opentxt_com.setText(_translate("MainWindow", "打開"))
         self.ID_name_com.setText(_translate("MainWindow", "ID"))
         self.btn_save_com.setText(_translate("MainWindow", "儲存"))
         self.btn_clean_com.setText(_translate("MainWindow", "清除"))
-        self.btn_save_com_2.setText(_translate("MainWindow", "掃描"))
-        self.IP_name_com.setText(_translate("MainWindow", "eGGi IP"))
         self.Result_box_com.setTitle(_translate("MainWindow", "Result"))
-        self.well_com.setText(_translate("MainWindow", "Well"))
-        self.label_step.setText(_translate("MainWindow", "Step1"))
-        self.well_pf_com.setText(_translate("MainWindow", "Well P/F"))
         self.top_pf_com.setText(_translate("MainWindow", "上蓋 P/F"))
+        self.ch6_qrcode_com.setText(_translate("MainWindow", "檢測CH6"))
         self.top_com.setText(_translate("MainWindow", "上蓋"))
-        self.Chart_box_com_2.setTitle(_translate("MainWindow", "上蓋"))
+        self.ch7_qrcode_com.setText(_translate("MainWindow", "檢測CH7"))
+        self.label_ch2_3.setText(_translate("MainWindow", "CH2"))
+        self.ch4_qrcode_com.setText(_translate("MainWindow", "檢測CH4"))
+        self.ch8_qrcode_com.setText(_translate("MainWindow", "檢測CH8"))
+        self.ch2_qrcode_com.setText(_translate("MainWindow", "檢測CH2"))
+        self.label_ch1_3.setText(_translate("MainWindow", "CH1"))
+        self.label_ch8_3.setText(_translate("MainWindow", "CH8"))
+        self.ch3_qrcode_com.setText(_translate("MainWindow", "檢測CH3"))
+        self.label_ch6_3.setText(_translate("MainWindow", "CH6"))
+        self.label_ch4_3.setText(_translate("MainWindow", "CH4"))
+        self.well_pf_com.setText(_translate("MainWindow", "Well P/F"))
+        self.label_qrcode_6.setText(_translate("MainWindow", "READ"))
+        self.com_qrcode_name.setText(_translate("MainWindow", "主機編號"))
+        self.label_ch7_3.setText(_translate("MainWindow", "CH7"))
+        self.label_ch5_3.setText(_translate("MainWindow", "CH5"))
+        self.label_ch3_3.setText(_translate("MainWindow", "CH3"))
+        self.ch1_qrcode_com.setText(_translate("MainWindow", "檢測CH1"))
+        self.ch5_qrcode_com.setText(_translate("MainWindow", "檢測CH5"))
+        self.well_com.setText(_translate("MainWindow", "Well"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_hardware), _translate("MainWindow", "EGGI主機"))
         self.EGGI_Title.setText(_translate("MainWindow", "溫度數據監控"))
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()

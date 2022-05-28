@@ -4,11 +4,7 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 import numpy as np
 from scipy.interpolate import make_interp_spline
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
-=======
 from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog,QMessageBox
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
@@ -25,13 +21,7 @@ import ftplib
 from ctypes import *
 #時間格式
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-now_output_time1 = str(datetime.now().strftime('%Y-%m-%d'))
-
-
-=======
 com_now_output = str(datetime.now().strftime('%Y-%m-%d'))
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
 
 #QrCode掃描
 def scan_qrcode(qrcode):
@@ -343,23 +333,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if(self.fname[0]==""):
             print("no file")
         else:
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-            if not os.path.isdir('./result'):
-                print("Directory 'result' does not exist.")
-            if not os.path.isdir('./image'):
-                print("Directory 'image' does not exist.")
-                os.mkdir('./image')
-            if not os.path.isdir('./image1'):
-                print("Directory 'image1' does not exist.")
-                os.mkdir('./image1')
-            self.input_file.setText(self.fname[0])
-            self.df = pd.read_csv(self.fname[0], delimiter='\t')
-            self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
-            print("Open file(.txt) >> " + str(self.fname[0]))
-            print("*" * 100)
-            print(self.df)
-            print("*" * 100)
-=======
             if not os.path.isdir('./image'):
                 print("Directory 'image' does not exist.")
                 os.mkdir('./image')
@@ -376,7 +349,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
             print("-" * 100)
             print(self.df)
             print("-" * 100)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
             # X軸
             for i in range(0, len(self.df.index), 1):
                 self.CH_total.append(i)
@@ -424,15 +396,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
                     for k in range(1, 9, 1):
                         self.T_On_array.append(0)
                         self.T_Off_array.append(0)
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-                print(self.T_On_array)
-                self.CH_T_On.append(self.T_On_array[0])
-                print(self.CH_T_On)
-=======
                 # print(self.T_On_array)
                 self.CH_T_On.append(self.T_On_array[0])
                 # print(self.CH_T_On)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
                 self.CH_T_Off.append(self.T_Off_array[0])
                 value_gap = self.T_On_array[0] - self.T_Off_array[0]
                 time_gap = self.slot_high[0] - self.slot_low[0]
@@ -442,12 +408,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 print(self.CH_T_On[i])
             print("-"*20 + "CH_T_Off" + "-"*20)
             for i in range(0,8,1):
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-                print(self.CH_T_Off[i]) 
-=======
                 print(self.CH_T_Off[i])
 
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
             # 將On跟Off陣列存取的資料對應至各個位置上
             self.ch1_T_On.setText(str(self.CH_T_On[0]))
             self.ch1_T_Off.setText(str(self.CH_T_Off[0]))
@@ -828,284 +790,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_chart.setScene(None)
         self.ch7_chart.setScene(None)
         self.ch8_chart.setScene(None)
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-
-
-        # 顯示現在時間
-
-
-
-    #設定相關按鈕觸發事件
-    def browsefile1(self):
-        self.temp_data = []
-        self.well_data=[]
-        self.time_data=[]
-        self.title_total = []
-        self.CH_total=[]
-        self.CH1_data=[]
-        self.CH2_data=[]
-
-        self.time_hour=[]
-        self.time_min=[]
-        self.time_sec=[]
-        self.time_data1=[]
-
-        self.fname=[]
-        self.fname = QFileDialog.getOpenFileName(self, '開啟txt檔案', 'C:\Program Files (x86)', 'txt files (*.txt)') # " C:\python\Learn_Python\Temperature" 是自己的電腦位置路徑
-        if(self.fname[0]==""):
-            print("no file")
-        else:
-            self.com_input_file.setText(self.fname[0])
-            #self.df = pd.read_csv(self.fname[0], delimiter='\t')
-            self.path = self.fname[0]
-            self.data = np.genfromtxt(self.path,dtype=str, delimiter=',')
-            #self.a=[]
-            self.a=self.data.shape[0]            
-            #print(self.a)
-            #將csv資料轉換list
-            for i in range(1,self.a,1):
-                try:
-                    self.time_data.append(self.data[i][0])
-                except ValueError:
-                    print("error 1")
-                    self.time_data.append(self.data[i-1][0])
-            for i in range(1,self.a,1):
-                try:
-
-                    #if(float(self.data[i][17])>float(self.data[i-1][17])+100):
-                        #self.temp_data.append(float(self.data[i-1][17]))
-                        #print("出現錯誤")                    
-                    #self.temp_data.append(float(self.data[i][17]))
-                    #print(float(self.data[i][17]))
-
-                    print(float(self.data[i][17]))
-                    if(i>1):
-                        try:
-                            if(float(self.data[i][17])+60<float(self.data[i-1][17])):
-                                self.temp_data.append(float(self.data[i-1][17]))
-                                print("error 2 number")
-                            else:
-                                self.temp_data.append(float(self.data[i][17]))
-                        except ValueError:
-                            self.temp_data.append(float(self.data[i-2][17]))
-                            print("error 2-1 number")
-                    else:
-                        self.temp_data.append(float(self.data[i][17]))
-
-                except ValueError:
-                    print("error 2")
-                    self.temp_data.append(float(self.data[i-1][17]))
-            for i in range(1,self.a,1):
-                try:                    
-                    print(float(self.data[i][18]))
-                    if(i>1):
-                        try:
-                            if(float(self.data[i][18])+60<float(self.data[i-1][18])):
-                                self.well_data.append(float(self.data[i-1][18]))
-                                print("error 3 number")
-                            else:
-                                self.well_data.append(float(self.data[i][18]))
-                        except ValueError:
-                            self.well_data.append(float(self.data[i][18]))
-                            print("error 3-1 number")
-                    else:
-                        self.well_data.append(float(self.data[i][18]))
-                    #self.well_data.append(float(self.data[i][18]))
-                except ValueError:
-                    print("error 3")
-                    self.well_data.append(float(self.data[i-1][18]))
-                    
-        
-
-            for i in range(0,self.a-1,1):
-                self.time_hour.append(int(self.time_data[i][0:2]))
-            for i in range(0,self.a-1,1):
-                self.time_min.append(int(self.time_data[i][3:5]))
-            for i in range(0,self.a-1,1):
-                self.time_sec.append(int(self.time_data[i][6:8]))
-            #取出時間資料
-            '''
-            for i in range(0,100,1):
-                print(self.time_hour[i])
-            for i in range(0,100,1):
-                print(self.time_min[i])
-        
-            for i in range(0,100,1):
-                print(self.time_sec[i])
-            '''
-
-            self.min=0
-            self.sec=0
-            self.time_data1.append(str(self.min)+":"+str(self.sec))
-            for i in range(0,self.a-2,1):
-                if (self.time_sec[i+1]>self.time_sec[i]):
-                    self.sec=self.sec+(self.time_sec[i+1]-self.time_sec[i])
-                    #print(self.min)
-                    if (self.sec>=60):
-                        self.sec=self.sec-60
-                        self.min=self.min+1
-                    self.time_data1.append(str(self.min)+":"+str(self.sec))
-                else:
-                    self.sec=self.sec+(self.time_sec[i+1]+60-self.time_sec[i])
-                    if (self.sec>=60):
-                        self.sec=self.sec-60
-                        self.min=self.min+1
-                    self.time_data1.append(str(self.min)+":"+str(self.sec))
-            
-                print(self.time_data1[i])
-            '''
-            for i in range(0,99,1):    
-                if(self.time_sec[i]>self.time_sec[i+1]):
-                    self.sec=self.sec+((self.time_sec[i+1]+60)-self.time_sec[i])
-                
-            
-            
-                else:
-                    self.sec=(self.time_sec[i+1]-self.time_sec[i])
-                    self.time_data1.append(self.min+":"+self.sec)
-            '''
-
-
-
-
-            #print(self.time_data[0])
-            #print(type(self.time_data))
-            #print(self.temp_data)
-            #print(self.well_data)
-
-            #plt.ylim([0,8])
-        
-            '''
-            self.xs=np.linspace(self.time_data1.min(),self.time_data1.max(),500)
-            self.ys=make_interp_spline(self.time_data1,self.temp_data)(self.xs)
-            plt.plot(self.xs,self.ys, color = 'r')
-            '''
-            plt.plot(self.time_data1,self.temp_data, color = 'r')
-            plt.savefig('image1/temp_data.jpg')
-            plt.clf()
-            plt.plot(self.time_data1,self.well_data, color = 'r')
-            plt.savefig('image1/well_data.jpg')
-            plt.show()
-
-
-
-
-
-            '''
-            self.path = self.fname[0]
-            with open(self.path, newline='') as csvfile:
-                rows = csv.reader(csvfile, delimiter=',')
-                headers = next(rows)
-                print('headers: %s' % headers)
-                for row in rows:
-                    print(row)
-            '''
-        
-        
-
-        
-            #print(self.df.head([1,1]))
-            #y=(self.df['time'])
-            #print(y)
-            #plt.plot(self.df.time, self.df.temp_lid, 'o') #將a、b所繪製的圖表更改顯示方式
-            #plt.plot(self.df.time, self.temp_well) #利用a、c繪製圖表
-            #plt.legend(["b","c"]) #標示ab、ac的圖示
-            #plt.show() #執行
-        
-            # X軸
-            '''
-            for i in range(0, len(self.df.index), 1):
-                self.title_total.append(i)
-            '''
-        
-
-            #self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
-            # -----------------------------------------------------------------------
-            img = cv2.imread("image1/temp_data.jpg")
-            img2 = cv2.imread("image1/well_data.jpg")   
-            # 轉換影象通道
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-            # 獲取影象大小
-            x = img.shape[1]
-            y = img.shape[0]
-            x2 = img2.shape[1]
-            y2 = img2.shape[0]
-            # 圖片放縮尺度
-            frame = QImage(img, x, y, x * 3, QImage.Format_RGB888)
-            self.pix = QPixmap.fromImage(frame)
-            frame2 = QImage(img2, x2, y2, x2 * 3, QImage.Format_RGB888)
-            self.pix2 = QPixmap.fromImage(frame2)
-            # 建立畫素圖元
-            self.item = QGraphicsPixmapItem(self.pix)
-            self.item2 = QGraphicsPixmapItem(self.pix2)
-            # 建立場景
-            self.scene = QGraphicsScene()
-            self.scene2 = QGraphicsScene()
-            self.scene.addItem(self.item)
-            self.scene2.addItem(self.item2)
-            # 將場景新增至檢視
-            self.lid_chart.setScene(self.scene)
-            self.well_chart.setScene(self.scene2)
-             # -----------------------------------------------------------------------
-
-            #self.take_picture1()
-
-
-    
-    def save_log1(self):
-        if self.com_input_name.text() == "":
-            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-        elif self.com_input_file.text() == "":
-            QtWidgets.QMessageBox.warning(self, u"存取失敗", u"未開啟檔案", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-        else:
-            QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
-                                          defaultButton=QtWidgets.QMessageBox.Ok)
-            
-            self.save_excel = pd.DataFrame({"日期時間" : [self.com_output_datetime.text(),self.com_output_datetime.text()],
-                                            "eGGi 編號" : ["",""],
-                                            "操作人員" : [self.com_input_name.text(),self.com_input_name.text()],
-                                            "Csv檔案" : [self.com_input_file.text(),self.com_input_file.text()],
-                                            "上蓋溫度" : ["" ,""],
-                                            "Pass/Fail" : ["",""],
-                                            "Well 槽 Step 1溫度" : ["",""],
-                                            "Pass/Fail " : ["",""],#名稱不可相同，必須多一個空格
-                                            "Well 槽 Step 2溫度" : ["",""],
-                                            "Pass/Fail  " : ["",""],
-                                            }, ["" ,""])
-            filepath = './result1/history' + now_output_time1+"output1.xlsx"
-            if os.path.isfile(filepath):
-                print("檔案存在。")
-                self.writer = pd.ExcelWriter(r'./result1/history' + now_output_time1+"output1.xlsx", mode="a", engine="openpyxl")
-                self.save_excel.to_excel(self.writer, index=["" ,""], sheet_name="b")
-                self.writer.save()
-                self.writer.close()
-            else:
-                print("檔案不存在。")
-                self.save_excel.to_excel('./result1/history' + now_output_time1+"output1.xlsx", encoding="openpyxl")
-                #utf_8_sig
-        
-    def clean_log1(self):
-        self.com_input_name.setText("")
-        self.com_output_datetime.setText("")
-        self.com_input_file.setText("")
-
-        self.scene = QGraphicsScene()
-        self.scene2 = QGraphicsScene()
-        self.lid_chart.setScene(self.scene)
-        self.well_chart.setScene(self.scene2)
-
-    
-    
-    
-    '''
-    def take_picture1(self):
-=======
    
     def take_com_picture(self):
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
         # ---------------CH1---------------------
         plt.figure(figsize=(3, 3), dpi=60, linewidth=0)
         plt.plot(self.CH_total, self.CH1_data, 'o-', color='red', label="CH1_data")  # 紅
@@ -1180,14 +866,35 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if(self.fname_ip == ""):
             print("沒有檔案")
         else:
-            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./data" )
+            #狀況列
+            try:
+                ftp = myFtp(self.fname_ip)
+            except ConnectionRefusedError :
+                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
+                return
+            except TimeoutError:
+                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
+                return
+            try:
+                ftp.Login('pi','123') #eGGi所有機台預設帳號是pi 密碼是123(如果為了測試是可以改)
+            except ftplib.error_perm:
+                QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
+                return
+            try:
+                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
+            except FileNotFoundError:
+                QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
+                return
+            ftp.close()
+            QMessageBox.information(self,'檔案資訊',str('factory.csv')+'下載成功',QMessageBox.Ok)
+            print("ok!")
             #創建資料夾
             if not os.path.isdir('./EGGI_COM'):
                 print("Directory 'EGGI_COM' does not exist.")
                 os.mkdir('./EGGI_COM')
             
             #開始做資料運算
-            self.com_file_csv = pd.read_csv("./data/factory.csv")
+            self.com_file_csv = pd.read_csv("factory.csv")
             print("-"*100)
             print(self.com_file_csv)
             for i in range(0,len(self.com_file_csv.index),1):
@@ -1279,11 +986,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
             self.save_excel = pd.DataFrame({"ID": [self.com_ID.text()],
-                                            "eGGi IP": [self.com_IP.text()],
-                                            "Well槽": [str(round(self.temp_well_average,2))],
+                                            "Well槽": [self.temp_well_average],
                                             "Well Pass/Fail": [self.well_pf_result],
-                                            "上蓋": [str(round(self.temp_lid_average,2))],
+                                            "上蓋": [self.temp_lid_average],
                                             "上蓋 Pass/Fail" :[self.temp_pf_result],
+                                            "檢測結果": [self.temp_well_average],
                                             "eGGi IP": [self.com_IP.text()]
                                             }, index=['Step'])
             
@@ -1442,13 +1149,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.Chart_box = QtWidgets.QGroupBox(self.tab_Sulink)
         self.Chart_box.setGeometry(QtCore.QRect(0, 162, 531, 373))
         font = QtGui.QFont()
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-        font.setPointSize(12)
-        font.setBold(False)
-=======
         font.setPointSize(16)
         font.setBold(True)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
         font.setWeight(75)
         self.Chart_box.setFont(font)
         self.Chart_box.setObjectName("Chart_box")
@@ -2205,11 +1907,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-        MainWindow.setWindowTitle(_translate("MainWindow", "溫度產測軟體"))
-=======
         MainWindow.setWindowTitle(_translate("MainWindow", "溫度數據監控"))
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_save.setText(_translate("MainWindow", "儲存"))
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))

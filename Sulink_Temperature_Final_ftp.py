@@ -4,11 +4,8 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 import numpy as np
 from scipy.interpolate import make_interp_spline
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
 from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog
-=======
 from PyQt5.QtWidgets import QDialog,QApplication,QFileDialog,QMessageBox
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
@@ -25,13 +22,12 @@ import ftplib
 from ctypes import *
 #時間格式
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
 now_output_time1 = str(datetime.now().strftime('%Y-%m-%d'))
 
 
-=======
+
 com_now_output = str(datetime.now().strftime('%Y-%m-%d'))
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
+
 
 #QrCode掃描
 def scan_qrcode(qrcode):
@@ -343,23 +339,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if(self.fname[0]==""):
             print("no file")
         else:
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
-            if not os.path.isdir('./result'):
-                print("Directory 'result' does not exist.")
-            if not os.path.isdir('./image'):
-                print("Directory 'image' does not exist.")
-                os.mkdir('./image')
-            if not os.path.isdir('./image1'):
-                print("Directory 'image1' does not exist.")
-                os.mkdir('./image1')
-            self.input_file.setText(self.fname[0])
-            self.df = pd.read_csv(self.fname[0], delimiter='\t')
-            self.df.columns = ['time', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
-            print("Open file(.txt) >> " + str(self.fname[0]))
-            print("*" * 100)
-            print(self.df)
-            print("*" * 100)
-=======
+
             if not os.path.isdir('./image'):
                 print("Directory 'image' does not exist.")
                 os.mkdir('./image')
@@ -376,7 +356,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             print("-" * 100)
             print(self.df)
             print("-" * 100)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
+
             # X軸
             for i in range(0, len(self.df.index), 1):
                 self.CH_total.append(i)
@@ -424,15 +404,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
                     for k in range(1, 9, 1):
                         self.T_On_array.append(0)
                         self.T_Off_array.append(0)
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
+
                 print(self.T_On_array)
                 self.CH_T_On.append(self.T_On_array[0])
                 print(self.CH_T_On)
-=======
+
                 # print(self.T_On_array)
                 self.CH_T_On.append(self.T_On_array[0])
                 # print(self.CH_T_On)
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
+
                 self.CH_T_Off.append(self.T_Off_array[0])
                 value_gap = self.T_On_array[0] - self.T_Off_array[0]
                 time_gap = self.slot_high[0] - self.slot_low[0]
@@ -442,12 +422,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 print(self.CH_T_On[i])
             print("-"*20 + "CH_T_Off" + "-"*20)
             for i in range(0,8,1):
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
+
                 print(self.CH_T_Off[i]) 
-=======
+
                 print(self.CH_T_Off[i])
 
->>>>>>> 526c70a42ead4a24c766a20c6d5ced61699aa230:Sulink_Temperature_Final_ftp.py
             # 將On跟Off陣列存取的資料對應至各個位置上
             self.ch1_T_On.setText(str(self.CH_T_On[0]))
             self.ch1_T_Off.setText(str(self.CH_T_Off[0]))
@@ -828,7 +807,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.ch6_chart.setScene(None)
         self.ch7_chart.setScene(None)
         self.ch8_chart.setScene(None)
-<<<<<<< HEAD:Sulink_Temperature_20220426.py
+
 
 
         # 顯示現在時間
