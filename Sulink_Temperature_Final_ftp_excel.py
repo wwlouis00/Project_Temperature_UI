@@ -448,7 +448,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             T_color = "color: green;"
             F_color = "color: gray;"
             constant_color = "color: orange;"
-            # 儲存結果
+            # 儲存結果 
 
             # CH1PF
             if self.CH_slot[0] == 0 or self.CH_T_On[0] == self.CH_T_Off[0]:
