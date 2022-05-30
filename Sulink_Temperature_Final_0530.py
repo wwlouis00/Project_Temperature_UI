@@ -29,6 +29,54 @@ def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
     return data[0].data.decode('utf-8')
 
+class myFtp:
+    ftp = ftplib.FTP()
+    ftp.set_pasv(False)
+
+    def __init__(self,host,port=22):
+        self.ftp.connect(host,port)
+    
+    def Login(self,user,passwd):
+        self.ftp.login(user,passwd)
+        print(self.ftp.welcome)
+    def DownLoadFile(self,LocalFile,RemoteFile): #下載指定目錄下的指定檔案
+        file_handler = open(LocalFile,'wb')
+        print(file_handler)
+        # self.ftp.retrbinary("RETR %s" % (RemoteFile),file_handler.write)#接收伺服器上檔案並寫入本地檔案
+        self.ftp.retrbinary('RETR ' + RemoteFile,file_handler.write)
+        file_handler.close()
+        return True
+
+    def DownLoadFileTree(self,LocalDir,RemoteDir): # 下載整個目錄下的檔案
+        print("remoteDir:",RemoteDir)
+        if not os.path.exists(LocalDir):
+            os.makedirs(LocalDir)
+            self.ftp.cwd(RemoteDir)
+            RemoteNames = self.ftp.nlst()
+            print("RemoteNames",RemoteNames)
+            for file in RemoteNames:
+                Local = os.path.join(LocalDir,file)
+                print(self.ftp.nlst(file))
+            if file.find(".") == -1:
+                if not os.path.exists(Local):
+                    os.makedirs(Local)
+                    self.DownLoadFileTree(Local,file)
+                else:
+                    self.DownLoadFile(Local,file)
+                    self.ftp.cwd("..")
+                    return True
+
+    #從本地上傳檔案到ftp
+    def uploadfile(self,remotepath,localpath):
+        bufsize = 1024
+        fp = open(localpath,'rb')
+        ftp.storbinary('STOR ' + remotepath,fp,bufsize)
+        ftp.set_debuglevel(0)
+        fp.close() 
+
+    def close(self):
+        self.ftp.quit()
+
 class Ui_MainWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
@@ -816,7 +864,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.fname_ip = self.com_IP.text()
         
         if(self.fname_ip == ""):
-            print("沒有檔案")
+            QtWidgets.QMessageBox.warning(self,'錯誤','未輸入IP',QMessageBox.Ok)
         else:
             #創建資料夾
             if not os.path.isdir('./EGGI_COM'):
@@ -825,11 +873,35 @@ class Ui_MainWindow(QtWidgets.QWidget):
                     os.mkdir('./EGGI_COM/excel')
                 if not os.path.isdir('./EGGI_COM/roi'):
                     os.mkdir('./EGGI_COM/roi')
-            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./EGGI_COM" )
-            os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/para/ROIs/merge_finish_test.png ./EGGI_COM/roi")
+            try:
+                ftp = myFtp(self.fname_ip)
+            except ConnectionRefusedError :
+                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
+                return
+            except TimeoutError:
+                QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
+                return
+            try:
+                ftp.Login('pi','123') #eGGi所有機台預設帳號是pi 密碼是123(如果為了測試是可以改)
+            except ftplib.error_perm:
+                QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
+                return
+            try:
+                ftp.DownLoadFile('./EGGI_COM/factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
+                ftp.DownLoadFile('./EGGI_COM/roi/merge_finish_test.png',':/home/pi/socket_cam/para/ROIs/merge_finish_test.png')
+            except FileNotFoundError:
+                QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
+                return
+            ftp.close()
+            QMessageBox.information(self,'檔案資訊',str('factory.csv')+'下載成功',QMessageBox.Ok)
+            print("ok!")
+
+            #使用os.system
+            # os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./EGGI_COM" )
+            # os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/para/ROIs/merge_finish_test.png ./EGGI_COM/roi")
             self.com_ROI.text = self.com_ID.text()
             self.com_ROI.setText(self.com_ROI.text)
-            os.rename("./EGGI_COM/roi/merge_finish_test.png","./EGGI_COM/roi/" + str(self.com_ROI.text) +".png")
+            os.rename("./EGGI_COM/roi/merge_finish_test.png","./EGGI_COM/roi/" + self.com_ROI.text +".png")
             #開始做資料運算
             self.com_file_csv = pd.read_csv("./EGGI_COM/factory.csv")
             print("-"*100)
@@ -916,9 +988,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         plt.savefig('EGGI_COM/temp_well.jpg')
     
     def com_save(self):
-        if self.com_IP.text() == "" or self.com_ID.text() == "":
-            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"請輸入操作人員", buttons=QtWidgets.QMessageBox.Ok,
+        if self.com_ID.text() == "":
+            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未掃描eGGi ID", buttons=QtWidgets.QMessageBox.Ok,
                                     defaultButton=QtWidgets.QMessageBox.Ok)
+        if self.com_IP.text() == "":
+            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未輸入eGGi IP", buttons=QtWidgets.QMessageBox.Ok,
+                                    defaultButton=QtWidgets.QMessageBox.Ok)
+        # if self.well_com_chart.setScene() == None or self.top_com_chart.setScene() == None:
+        #     QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未執行運算", buttons=QtWidgets.QMessageBox.Ok,
+        #                             defaultButton=QtWidgets.QMessageBox.Ok)
         else:
             if os.path.isfile('./EGGI_COM/excel/eggi_temp_' + com_now_output +"output.xlsx"):
                 new_df = pd.read_excel(r"./EGGI_COM/excel/eggi_temp_" + com_now_output + "output.xlsx", index_col=0)
@@ -928,11 +1006,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                          self.well_pf_result,str(round(self.temp_lid_average,2)),self.temp_pf_result]],
                                          columns=["ID", "eGGi IP", "Well槽","Well Pass/Fail","上蓋","上蓋 Pass/Fail"])
                 self.save_excel = new_df.append(new_data, ignore_index=True)
-                print(new_df)
                 self.save_excel.to_excel(r'./EGGI_COM/excel/eggi_temp_' + com_now_output +"output.xlsx",encoding="utf_8_sig")
-            else:
                 QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
                                             defaultButton=QtWidgets.QMessageBox.Ok)
+            else:
                 self.save_excel = pd.DataFrame({"ID": [self.com_ID.text()],
                                                 "eGGi IP": [self.com_IP.text()],
                                                 "Well槽": [str(round(self.temp_well_average,2))],
@@ -943,7 +1020,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                                 })
 
                 self.save_excel.to_excel('./EGGI_COM/excel/eggi_temp_' + com_now_output +"output.xlsx",encoding="utf_8_sig")
-
+                QtWidgets.QMessageBox.information(self, u"存取成功", u"已成功另存Excel檔案", buttons=QtWidgets.QMessageBox.Ok,
+                                            defaultButton=QtWidgets.QMessageBox.Ok)
     def com_clean(self):
         self.well_com_value.setText("")
         self.well_pf_com_value.setText("")
@@ -1935,7 +2013,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "溫度數據與ROI"))
         self.Input_box.setTitle(_translate("MainWindow", "Input"))
         self.btn_save.setText(_translate("MainWindow", "儲存"))
         self.label_txt_2.setText(_translate("MainWindow", "TXT檔案"))

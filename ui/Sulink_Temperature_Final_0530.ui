@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_Sulink">
      <attribute name="title">
@@ -411,7 +411,7 @@
         <rect>
          <x>10</x>
          <y>42</y>
-         <width>561</width>
+         <width>599</width>
          <height>349</height>
         </rect>
        </property>
@@ -1472,7 +1472,7 @@ color: rgb(255, 170, 0);</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
