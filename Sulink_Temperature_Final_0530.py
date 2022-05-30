@@ -951,6 +951,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.com_IP.setText("")
         self.com_ID.setText("")
         self.top_pf_com_value.setText("")
+        self.com_ROI.setText("")
         self.well_com_chart.setScene(None)
         self.top_com_chart.setScene(None)
 
