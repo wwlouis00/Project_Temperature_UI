@@ -33,7 +33,7 @@ class myFtp:
     ftp = ftplib.FTP()
     ftp.set_pasv(False)
 
-    def __init__(self,host,port=22):
+    def __init__(self,host,port=21):
         self.ftp.connect(host,port)
     
     def Login(self,user,passwd):
@@ -865,7 +865,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         
         if(self.fname_ip == ""):
             QtWidgets.QMessageBox.warning(self,'錯誤','未輸入IP',QMessageBox.Ok)
-        else:
+        else:            
             #創建資料夾
             if not os.path.isdir('./EGGI_COM'):
                 os.mkdir('./EGGI_COM')
@@ -887,21 +887,25 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
                 return
             try:
-                ftp.DownLoadFile('./EGGI_COM/factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
-                ftp.DownLoadFile('./EGGI_COM/roi/merge_finish_test.png',':/home/pi/socket_cam/para/ROIs/merge_finish_test.png')
+                print("1234")
+                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
+                ftp.DownLoadFile('merge_finish_test.png','/home/pi/socket_cam/para/ROIs/merge_finish_test.png')
+                
             except FileNotFoundError:
                 QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
                 return
             ftp.close()
             QMessageBox.information(self,'檔案資訊',str('factory.csv')+'下載成功',QMessageBox.Ok)
             print("ok!")
-
+            
             #使用os.system
-            # os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./EGGI_COM" )
-            # os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/para/ROIs/merge_finish_test.png ./EGGI_COM/roi")
+            #os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./EGGI_COM" )
+            #os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/para/ROIs/merge_finish_test.png ./EGGI_COM/roi")
             self.com_ROI.text = self.com_ID.text()
             self.com_ROI.setText(self.com_ROI.text)
-            os.rename("./EGGI_COM/roi/merge_finish_test.png","./EGGI_COM/roi/" + self.com_ROI.text +".png")
+            os.rename('factory.csv',"./EGGI_COM/factory.csv")
+            os.rename('merge_finish_test.png',"./EGGI_COM/roi/" + self.com_ROI.text +".png")
+            #os.rename("./EGGI_COM/roi/merge_finish_test.png","./EGGI_COM/roi/" + self.com_ROI.text +".png")
             #開始做資料運算
             self.com_file_csv = pd.read_csv("./EGGI_COM/factory.csv")
             print("-"*100)
@@ -995,8 +999,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未輸入eGGi IP", buttons=QtWidgets.QMessageBox.Ok,
                                     defaultButton=QtWidgets.QMessageBox.Ok)
         # if self.well_com_chart.setScene() == None or self.top_com_chart.setScene() == None:
-        #     QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未執行運算", buttons=QtWidgets.QMessageBox.Ok,
-        #                             defaultButton=QtWidgets.QMessageBox.Ok)
+            # QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未執行運算", buttons=QtWidgets.QMessageBox.Ok,
+                                    # defaultButton=QtWidgets.QMessageBox.Ok)
         else:
             if os.path.isfile('./EGGI_COM/excel/eggi_temp_' + com_now_output +"output.xlsx"):
                 new_df = pd.read_excel(r"./EGGI_COM/excel/eggi_temp_" + com_now_output + "output.xlsx", index_col=0)
