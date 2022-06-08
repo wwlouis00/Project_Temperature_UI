@@ -25,6 +25,10 @@ from sqlalchemy import false
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 com_now_output = str(datetime.now().strftime('%Y-%m-%d'))
 
+if not os.path.isdir('./EGGI_COM'):
+    os.mkdir('./EGGI_COM')
+    os.mkdir('./EGGI_COM/excel')
+    os.mkdir('./EGGI_COM/roi')
 def scan_qrcode(qrcode):
     data = pyzbar.decode(qrcode)
     return data[0].data.decode('utf-8')
@@ -889,7 +893,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             try:
                 print("1234")
                 ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
-                ftp.DownLoadFile('merge_finish_test.png','/home/pi/socket_cam/para/ROIs/merge_finish_test.png')
+                ftp.DownLoadFile('merged_image.png','/home/pi/socket_cam/para/ROIs/merged_image.png')
                 
             except FileNotFoundError:
                 QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
@@ -898,16 +902,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
             QMessageBox.information(self,'檔案資訊',str('factory.csv')+'下載成功',QMessageBox.Ok)
             print("ok!")
             
-            #使用os.system
-            #os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/result/factory.csv ./EGGI_COM" )
-            #os.system("scp pi@"+ str(self.fname_ip) + ":/home/pi/socket_cam/para/ROIs/merge_finish_test.png ./EGGI_COM/roi")
             self.com_ROI.text = self.com_ID.text()
             self.com_ROI.setText(self.com_ROI.text)
-            os.rename('factory.csv',"./EGGI_COM/factory.csv")
-            os.rename('merge_finish_test.png',"./EGGI_COM/roi/" + self.com_ROI.text +".png")
-            #os.rename("./EGGI_COM/roi/merge_finish_test.png","./EGGI_COM/roi/" + self.com_ROI.text +".png")
+            
+            os.rename('merged_image.png',"./EGGI_COM/roi/" + self.com_ROI.text +".png")
             #開始做資料運算
-            self.com_file_csv = pd.read_csv("./EGGI_COM/factory.csv")
+            self.com_file_csv = pd.read_csv("factory.csv")
+            # os.rename('factory.csv',"./EGGI_COM/factory.csv")
             print("-"*100)
             print(self.com_file_csv)
             for i in range(0,len(self.com_file_csv.index),1):
@@ -995,12 +996,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if self.com_ID.text() == "":
             QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未掃描eGGi ID", buttons=QtWidgets.QMessageBox.Ok,
                                     defaultButton=QtWidgets.QMessageBox.Ok)
-        if self.com_IP.text() == "":
+        elif self.com_IP.text() == "":
             QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未輸入eGGi IP", buttons=QtWidgets.QMessageBox.Ok,
                                     defaultButton=QtWidgets.QMessageBox.Ok)
-        # if self.well_com_chart.setScene() == None or self.top_com_chart.setScene() == None:
-            # QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未執行運算", buttons=QtWidgets.QMessageBox.Ok,
-                                    # defaultButton=QtWidgets.QMessageBox.Ok)
+        elif self.well_com_chart.setScene(None) or self.top_com_chart.setScene(None):
+            QtWidgets.QMessageBox.critical(self, u"存取失敗", u"未執行運算", buttons=QtWidgets.QMessageBox.Ok,
+                                    defaultButton=QtWidgets.QMessageBox.Ok)
         else:
             if os.path.isfile('./EGGI_COM/excel/eggi_temp_' + com_now_output +"output.xlsx"):
                 new_df = pd.read_excel(r"./EGGI_COM/excel/eggi_temp_" + com_now_output + "output.xlsx", index_col=0)
@@ -1064,11 +1065,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if self.com_ROI.text() == "":
             QtWidgets.QMessageBox.critical(self, u"警告", u"請輸入更改檔名", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
-        if not os.path.isfile('./EGGI_COM/merge_finish_test.png'):
-            QtWidgets.QMessageBox.critical(self, u"警告", u"merge_finish_test.png不存在", buttons=QtWidgets.QMessageBox.Ok,
+        if not os.path.isfile('./EGGI_COM/merged_image.png'):
+            QtWidgets.QMessageBox.critical(self, u"警告", u"merged_image.png不存在", buttons=QtWidgets.QMessageBox.Ok,
                                           defaultButton=QtWidgets.QMessageBox.Ok)
         else:
-            os.rename("./EGGI_COM/merge_finish_test.png","./EGGI_COM/" + self.roi_rename +".png")
+            os.rename("./EGGI_COM/merged_image.png","./EGGI_COM/" + self.roi_rename +".png")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
