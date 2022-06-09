@@ -342,21 +342,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
             print("no file")
         else:
             if not os.path.isdir('./image'):
-                print("Directory 'image' does not exist.")
-                os.mkdir('./image')
+                os.mkdir('./image')              
             if not os.path.isdir('./result'):
-                print("Directory 'result' does not exist.")
                 os.mkdir('./result')
             if not os.path.isdir('./EGGI_Temperature'):
-                print("Directory 'EGGI_Temperature' does not exist.")
                 os.mkdir('./EGGI_Temperature')
             self.input_file.setText(self.fname[0])
             self.df = pd.read_csv(self.fname[0], delimiter='\t')
             self.df.columns = ['time','index', 'index', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']  # 在開啟檔案上面新增一行
             print("Open file(.txt) >> " + str(self.fname[0]))
-            print("-" * 100)
-            print(self.df)
-            print("-" * 100)
             # X軸
             for i in range(0, len(self.df.index), 1):
                 self.CH_total.append(i)
@@ -404,7 +398,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                     for k in range(1, 9, 1):
                         self.T_On_array.append(0)
                         self.T_Off_array.append(0)
-                print(self.T_On_array)
+                # print(self.T_On_array)
                 self.CH_T_On.append(self.T_On_array[0])
                 print(self.CH_T_On)
                 self.CH_T_Off.append(self.T_Off_array[0])
@@ -873,7 +867,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
         
         if(self.fname_ip == ""):
             QtWidgets.QMessageBox.warning(self,'錯誤','未輸入IP',QMessageBox.Ok)
-        else:            
+        else:
+            if os.path.isfile("./factory.csv"):
+                os.remove("./factory.csv")
             try:
                 ftp = myFtp(self.fname_ip)
             except ConnectionRefusedError :
@@ -888,7 +884,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
                 return
             try:
-                print("1234")
                 ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
                 ftp.DownLoadFile('merged_image.png','/home/pi/socket_cam/para/ROIs/merged_image.png')
                 
@@ -901,18 +896,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
             
             self.com_ROI.text = self.com_ID.text()
             self.com_ROI.setText(self.com_ROI.text)
-            os.rename('factory.csv',"./EGGI_COM/factory.csv")
-            os.rename('merged_image.png',"./EGGI_COM/roi/" + self.com_ROI.text +".png")
+            
             #開始做資料運算
-            self.com_file_csv = pd.read_csv("./EGGI_COM/factory.csv")
-            print("-"*100)
+            self.com_file_csv = pd.read_csv("factory.csv")
             print(self.com_file_csv)
             for i in range(0,len(self.com_file_csv.index),1):
                 self.temp_lid.append(self.com_file_csv.loc[i, 'temp_lid'])
                 self.temp_well.append(self.com_file_csv.loc[i, 'temp_well'])
             for i in range(0,len(self.com_file_csv.index),1):
                 self.com_total.append(i)
-            print("-"*100)
             #Well槽平均
             self.well_pf_result = []
             self.temp_pf_result = []
@@ -935,8 +927,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.temp_pf_result.append("Fail")
             self.top_com_value.setText(str(round(self.temp_lid_average,2))) #取小數後第二位
 
-            print(self.temp_lid)
-            print(self.temp_well)
+            # print(self.temp_lid)
+            # print(self.temp_well)
             self.com_csv_chart()
             # 取圖片
             img = cv2.imread("EGGI_COM/temp_well.jpg")
@@ -972,7 +964,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             # 將場景新增至檢視
             self.well_com_chart.setScene(self.scene)
             self.top_com_chart.setScene(self.scene2)
-
+            os.rename('merged_image.png',"./EGGI_COM/roi/" + self.com_ROI.text +".png")
     
     def com_csv_chart(self):
         # ---------------temp_lid---------------------
@@ -1002,8 +994,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
         else:
             if os.path.isfile('./EGGI_COM/excel/eggi_temp_' + com_now_output +"output.xlsx"):
                 new_df = pd.read_excel(r"./EGGI_COM/excel/eggi_temp_" + com_now_output + "output.xlsx", index_col=0)
-                print("-"*100)
-                # print("test")
                 new_data = pd.DataFrame([[self.com_ID.text(),self.com_IP.text(),str(round(self.temp_well_average,2)),
                                          self.well_pf_result,str(round(self.temp_lid_average,2)),self.temp_pf_result]],
                                          columns=["ID", "eGGi IP", "Well槽","Well Pass/Fail","上蓋","上蓋 Pass/Fail"])
