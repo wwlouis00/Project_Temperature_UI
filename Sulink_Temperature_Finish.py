@@ -21,6 +21,7 @@ import ftplib
 from ctypes import *
 from sqlalchemy import false
 from sqlalchemy import false
+import shutil
 #時間格式
 now_output_time = str(datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
 com_now_output = str(datetime.now().strftime('%Y-%m-%d'))
@@ -870,6 +871,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
         else:
             if os.path.isfile("./factory.csv"):
                 os.remove("./factory.csv")
+            
+            if os.path.isfile("./merged_image.png"):
+                os.remove("./merged_image.png")
+                
             try:
                 ftp = myFtp(self.fname_ip)
             except ConnectionRefusedError :
@@ -964,7 +969,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             # 將場景新增至檢視
             self.well_com_chart.setScene(self.scene)
             self.top_com_chart.setScene(self.scene2)
-            os.rename('merged_image.png',"./EGGI_COM/roi/" + self.com_ROI.text +".png")
+            shutil.move('merged_image.png', "./EGGI_COM/roi/" + self.com_ROI.text +".png")
     
     def com_csv_chart(self):
         # ---------------temp_lid---------------------
