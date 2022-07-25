@@ -884,13 +884,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.warning(self,'錯誤','IP連線失敗',QMessageBox.Ok)
                 return
             try:
-                ftp.Login('pi','123') #eGGi所有機台預設帳號是pi 密碼是123(如果為了測試是可以改)
+                 ftp.Login('pi','123') #eGGi所有機台預設帳號是pi 密碼是123(如果為了測試是可以改)
             except ftplib.error_perm:
                 QtWidgets.QMessageBox.warning(self,'錯誤','使用者帳密錯誤',QMessageBox.Ok)
                 return
             try:
-                ftp.DownLoadFile('factory.csv','/home/pi/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
-                ftp.DownLoadFile('merged_image.png','/home/pi/socket_cam/para/ROIs/merged_image.png')
+                ftp.DownLoadFile('factory.csv','/home/pi/eggi_release/socket_cam/result/factory.csv')#要抓取factory.csv檔案都在/home/pi/socket_cam/result/底下(為了測試也可以改)
+                ftp.DownLoadFile('merged_image.png','/home/pi/eggi_release/socket_cam/para/ROIs/merged_image.png')
                 
             except FileNotFoundError:
                 QtWidgets.QMessageBox.warning(self,'錯誤','檔案路徑錯誤',QMessageBox.Ok)
