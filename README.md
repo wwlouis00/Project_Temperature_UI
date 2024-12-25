@@ -1,23 +1,22 @@
-# 速灵科 RS15-C 4路 PT100 温度变送器隔离采集模块
+# SuLink RS15-C 4-Channel PT100 Temperature Transmitter Isolation Acquisition Module
 
-速灵科 RS15-C 是一款4路 PT100 温度变送器隔离采集模块，支援 RS485 接口並遵循 MODBUS 通訊協議。以下是該模塊的一些特點和功能介紹：
+The SuLink RS15-C is a 4-channel PT100 temperature transmitter isolation acquisition module that supports the RS485 interface and follows the MODBUS communication protocol. Below is an introduction to its features and functionalities:
 
-## 特點
+## Features
 
-1. **多通道温度采集**：RS15-C 支援 4 路 PT100 温度传感器，可同時采集多個温度數據。
-2. **高精度温度測量**：搭配 PT100 铂热电阻传感器，提供高精度的温度測量，可達到工業級準確度。
-3. **隔离設計**：具備隔離設計，能夠提供良好的電氣隔離，提高系統的穩定性和安全性。
-4. **RS485 接口**：使用 RS485 通訊接口，支援長距離通訊和多點連接，適用於工業環境。
-5. **MODBUS 通訊協議**：RS15-C 遵循 MODBUS 通訊協議，實現了數據的溝通和控制。
+1. **Multi-Channel Temperature Acquisition**: The RS15-C supports 4 PT100 temperature sensors, enabling simultaneous acquisition of multiple temperature readings.
+2. **High-Precision Temperature Measurement**: With PT100 platinum resistance sensors, it provides high-accuracy temperature measurements suitable for industrial-grade requirements.
+3. **Isolation Design**: Equipped with an isolation design, it ensures excellent electrical isolation, enhancing system stability and safety.
+4. **RS485 Interface**: Utilizes the RS485 communication interface, supporting long-distance communication and multi-point connections, ideal for industrial environments.
+5. **MODBUS Communication Protocol**: Adheres to the MODBUS protocol, enabling seamless data communication and control.
 
-## 功能
+## Functions
 
-1. **溫度監測**：RS15-C 通過 PT100 温度传感器采集溫度數據，並通過 RS485 接口將數據傳輸給上位設備或監控系統。
-2. **隔離保護**：該模塊具有隔離設計，能夠提供電氣隔離，防止電氣干擾和保護系統安全。
-3. **通訊協議支援**：支援 MODBUS 通訊協議，可與其他設備進行溝通和數據交換，實現數據的監控和控制。
+1. **Temperature Monitoring**: The RS15-C collects temperature data through PT100 sensors and transmits it to upper-level devices or monitoring systems via the RS485 interface.
+2. **Isolation Protection**: The module features isolation design to prevent electrical interference and ensure system safety.
+3. **Protocol Support**: Supports the MODBUS communication protocol for efficient data exchange and control with other devices.
 
-速灵科 RS15-C 4路 PT100 温度变送器隔离采集模块在工業自動化、環境監測和溫度控制等應用場景中具有廣泛的應用性。它可提供高精度、穩定性和可靠性的溫度監測解決方案。
+The SuLink RS15-C 4-Channel PT100 Temperature Transmitter Isolation Acquisition Module is widely applicable in industrial automation, environmental monitoring, and temperature control. It offers a high-precision, stable, and reliable solution for temperature monitoring.
 
-> 請注意：詳細的產品規格和應用細節，請參考速灵科的官方資料和文件。
+> **Note**: For detailed product specifications and application details, please refer to the official documentation and materials from SuLink.
 
-希望這份速灵科 RS15-C 4路 PT100 温度变送器隔离采集模块的介紹對你有所幫助！
